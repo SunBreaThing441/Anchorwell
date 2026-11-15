@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Therapy Deletion - AnchorWell Admin</title>
+    <link rel="icon" type="image/png" href="{% static 'img/psychbuddy.png' %}">
+    <link rel="stylesheet" href="{% static 'css/anchorwell.css' %}">
+    <style>
+        :root {
+            --admin-amber: #F59E0B;
+            --admin-amber-glow: rgba(245, 158, 11, 0.3);
+            --admin-violet: #8B5CF6;
+        }
+        .aw-admin-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: calc(100vh - 70px);
+        }
+        .aw-admin-sidebar {
+            background: rgba(11, 15, 35, 0.95);
+            border-right: 1px solid rgba(245, 158, 11, 0.25);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .aw-admin-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            color: var(--aw-slate-light);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            margin-bottom: 0.35rem;
+        }
+        .aw-admin-nav-item:hover, .aw-admin-nav-item.active {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--admin-amber);
+            border-left: 3px solid var(--admin-amber);
+        }
+    </style>
+</head>
+<body style="display: flex; flex-direction: column; min-height: 100vh; background-color: #030611;">
+    <header style="width: 100%; border-bottom: 1px solid rgba(245, 158, 11, 0.25); background: rgba(8, 11, 26, 0.95); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(245, 158, 11, 0.15); border: 1px solid var(--admin-amber); display: flex; align-items: center; justify-content: center; color: var(--admin-amber);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            </div>
+            <div>
+                <span style="font-weight: 800; font-size: 1.15rem; color: #FFFFFF;">AnchorWell</span>
+                <span class="aw-mono" style="font-size: 0.7rem; color: var(--admin-amber); margin-left: 8px;">ADMINISTRATIVE SECURITY MESH</span>
+            </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <div class="aw-telemetry-pill" style="border-color: rgba(245, 158, 11, 0.4); color: var(--admin-amber);">
+                <span class="aw-status-beacon" style="background: var(--aw-crisis);"></span>
+                <span>DELETION PROTOCOL</span>
+            </div>
+            <a href="adminlogout" class="aw-btn aw-btn-secondary" style="font-size: 0.78rem; padding: 0.4rem 0.85rem; border-color: rgba(245, 158, 11, 0.3); color: var(--admin-amber);">Terminate Session</a>
+        </div>
+    </header>
+
+    <div class="aw-admin-layout">
+        <aside class="aw-admin-sidebar">
+            <div>
+                <div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.06);">
+                    <div style="font-size: 0.72rem; color: var(--aw-slate-muted); font-family: var(--aw-font-mono); margin-bottom: 4px;">ACTIVE CLEARANCE</div>
+                    <div style="font-weight: 700; color: #FFFFFF; font-size: 0.95rem;">System Root Controller</div>
+                    <div style="font-size: 0.75rem; color: var(--admin-amber);">Level 4 Clinical Clearance</div>
+                </div>
+                <nav>
+                    <a href="admin" class="aw-admin-nav-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>Platform Overview</a>
+                    <a href="usersNav" class="aw-admin-nav-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Patient Registry</a>
+                    <a href="manageResources" class="aw-admin-nav-item active"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>Resource Telemetry</a>
+                    <a href="admintips" class="aw-admin-nav-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>Clinical Directives</a>
+                    <a href="adminforum" class="aw-admin-nav-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>Support Mesh Chat</a>
+                    <a href="appointmentmail" class="aw-admin-nav-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>Consultation Dispatch</a>
+                </nav>
+            </div>
+            <div style="padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06);">
+                <a href="/" style="display: flex; align-items: center; gap: 8px; color: var(--aw-slate-muted); font-size: 0.8rem; text-decoration: none;">&larr; Switch to Patient Portal</a>
+            </div>
+        </aside>
+
+        <main class="aw-main-content" style="padding: 2.5rem 3rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
+                <div>
+                    <div class="aw-hero-eyebrow" style="margin-bottom: 0.5rem; color: var(--aw-crisis);">
+                        <span class="aw-status-beacon" style="background: var(--aw-crisis);"></span>
+                        <span>IRREVERSIBLE RESOURCE PURGE</span>
+                    </div>
+                    <h1 style="font-size: 2rem;">Video Therapy Deletion</h1>
+                    <p style="color: var(--aw-slate-light); font-size: 0.95rem; margin-top: 0.25rem;">Expunge resource record from MySQL persistent database.</p>
+                </div>
+                <a href="manageResources" class="aw-btn aw-btn-secondary" style="font-size: 0.85rem;">&larr; Back to Directory</a>
+            </div>
+
+            <div class="aw-card" style="max-width: 600px; padding: 2.5rem; border-color: rgba(244, 63, 94, 0.35); background: rgba(244, 63, 94, 0.04);">
+                <form name="deleteForm" action="delVideoSessions" method="POST" onsubmit="return confirmAction()">
+                    {% csrf_token %}
+                    <div class="aw-form-group">
+                        <label class="aw-form-label" style="color: #FDA4AF;">Video Title to Expunge</label>
+                        <input type="text" name="videoname" id="targetResource" class="aw-form-input" required 
+                               placeholder="e.g. Cognitive Behavioral Overview" 
+                               style="border-color: rgba(244, 63, 94, 0.4); font-family: var(--aw-font-mono);">
+                    </div>
+                    <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem;">
+                        <a href="manageResources" class="aw-btn aw-btn-secondary">Cancel</a>
+                        <button type="submit" name="delete" class="aw-btn" style="background: var(--aw-crisis); color: #FFFFFF; font-weight: 700; box-shadow: 0 0 20px rgba(244, 63, 94, 0.35);">
+                            Confirm Deletion &rarr;
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="{% static 'js/anchorwell.js' %}"></script>
+    <script>
+        function confirmAction() {
+            const val = document.getElementById('targetResource').value.trim();
+            return confirm(`CRITICAL: Confirm removal of '${val}' from persistence database?`);
+        }
+    </script>
+</body>
+</html>

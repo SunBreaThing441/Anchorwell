@@ -1,0 +1,222 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GIA Cognitive Agent - AnchorWell</title>
+  <link rel="icon" type="image/png" href="{% static 'img/psychbuddy.png' %}">
+  <link rel="stylesheet" href="{% static 'css/anchorwell.css' %}">
+  <style>
+    .aw-gia-layout {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      height: calc(100vh - 72px);
+    }
+    .aw-chat-column {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      border-right: 1px solid rgba(45, 212, 191, 0.15);
+    }
+    .aw-chat-log {
+      flex: 1;
+      overflow-y: auto;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .aw-chat-input-bar {
+      padding: 1.25rem 2rem;
+      background: rgba(8, 11, 26, 0.95);
+      border-top: 1px solid rgba(45, 212, 191, 0.15);
+      display: flex;
+      gap: 1rem;
+    }
+    .aw-msg-item {
+      max-width: 70%;
+      padding: 1rem 1.35rem;
+      border-radius: 16px;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+    .aw-msg-agent {
+      align-self: flex-start;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(45, 212, 191, 0.3);
+      color: #F0FDFA;
+    }
+    .aw-msg-patient {
+      align-self: flex-end;
+      background: linear-gradient(135deg, rgba(13, 148, 136, 0.25) 0%, rgba(30, 27, 75, 0.4) 100%);
+      border: 1px solid var(--aw-teal-bright);
+      color: #FFFFFF;
+    }
+    .aw-gia-sidebar {
+      background: rgba(8, 11, 26, 0.95);
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y: auto;
+    }
+    @media (max-width: 900px) {
+      .aw-gia-layout {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+      .aw-gia-sidebar {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body style="display: flex; flex-direction: column; min-height: 100vh; overflow: hidden;">
+  <!-- Top HUD Navigation -->
+  <header class="aw-nav-container">
+    <nav class="aw-nav">
+      <a href="/" class="aw-brand">
+        <div class="aw-brand-symbol">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+            <path d="M2 12h20"></path>
+          </svg>
+        </div>
+        <div class="aw-brand-text">
+          <span class="aw-brand-title">AnchorWell</span>
+          <span class="aw-brand-badge">UNESCO Mental Support Grid</span>
+        </div>
+      </a>
+
+      <div class="aw-telemetry-pill">
+        <span class="aw-status-beacon"></span>
+        <span>GIA COGNITIVE NEURAL AGENT</span>
+      </div>
+
+      <ul class="aw-nav-links">
+        <li class="aw-nav-item"><a href="homepage" class="aw-nav-link">Dashboard</a></li>
+        <li class="aw-nav-item"><a href="relaxation" class="aw-nav-link">Sound Sanctuary</a></li>
+        <li class="aw-nav-item"><a href="sessions" class="aw-nav-link">Video Therapy</a></li>
+        <li class="aw-nav-item"><a href="wellnessLog" class="aw-nav-link">Journal</a></li>
+        <li class="aw-nav-item"><a href="GIA" class="aw-nav-link active">GIA Agent</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="aw-gia-layout">
+    <!-- Chat Area -->
+    <div class="aw-chat-column">
+      <div class="aw-chat-log" id="chat-box">
+        <div class="aw-msg-item aw-msg-agent">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <strong style="color: var(--aw-teal-bright); font-size: 0.82rem; font-family: var(--aw-font-mono);">
+              GIA COGNITIVE AGENT
+            </strong>
+            <span class="aw-mono" style="font-size: 0.7rem; color: var(--aw-slate-muted);">UNESCO NODE</span>
+          </div>
+          <p style="margin: 0;">
+            Greetings. I am <strong>GIA</strong> (Grounded Intelligent Assistant), your UNESCO psychosocial companion. I am trained in evidence-based cognitive support, stress de-escalation, and somatic mindfulness grounding. How can I assist your mental equilibrium today?
+          </p>
+        </div>
+      </div>
+
+      <div class="aw-chat-input-bar">
+        <input type="text" id="user-input" class="aw-form-input" 
+               placeholder="Formulate your thought, stressor, or reflection..." 
+               style="flex: 1;" onkeydown="if(event.key === 'Enter') sendMessage()">
+        <button class="aw-btn aw-btn-primary" onclick="sendMessage()" style="padding: 0.75rem 1.5rem; white-space: nowrap;">
+          <span>Transmit</span> &rarr;
+        </button>
+      </div>
+    </div>
+
+    <!-- Agent Profile Sidebar -->
+    <aside class="aw-gia-sidebar">
+      <div>
+        <div style="width: 56px; height: 56px; border-radius: 16px; background: rgba(45, 212, 191, 0.15); border: 1px solid var(--aw-teal-bright); display: flex; align-items: center; justify-content: center; color: var(--aw-teal-bright); margin-bottom: 1.25rem;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2a10 10 0 1 0 10 10H12V2z"></path>
+            <path d="M12 2a10 10 0 0 1 10 10h-10V2z"></path>
+            <path d="M12 12L2.5 7.5"></path>
+            <path d="M12 12v10"></path>
+            <path d="M12 12l9.5-4.5"></path>
+          </svg>
+        </div>
+
+        <h2 style="font-size: 1.5rem; margin-bottom: 0.25rem;">GIA Agent</h2>
+        <div class="aw-mono" style="font-size: 0.75rem; color: var(--aw-teal-bright); margin-bottom: 1.5rem;">
+          UNESCO GROUNDED INTELLIGENCE
+        </div>
+
+        <p style="font-size: 0.85rem; color: var(--aw-slate-light); line-height: 1.7; margin-bottom: 1.5rem;">
+          GIA operates as a decentralized conversational guide designed to assist with somatic regulation, cognitive restructuring, and emotional decompression.
+        </p>
+
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(45, 212, 191, 0.2); border-radius: 12px; padding: 1.25rem; font-size: 0.8rem; line-height: 1.6; color: var(--aw-slate-muted);">
+          <strong style="color: #FFFFFF; display: block; margin-bottom: 4px;">Directives Compliance:</strong>
+          In alignment with UNESCO multilateral mental health charters, all dialogues remain confidential within local client encryption boundaries.
+        </div>
+      </div>
+
+      <div style="padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.75rem; color: var(--aw-slate-muted);">
+        <span>Protocol: REST RASA Webhook / Port 5005</span>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Core Runtime Scripts -->
+  <script src="{% static 'js/anchorwell.js' %}"></script>
+  <script>
+    function appendMessage(content, role) {
+      const chatBox = document.getElementById('chat-box');
+      const msgDiv = document.createElement('div');
+      const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      msgDiv.className = `aw-msg-item ${role === 'agent' ? 'aw-msg-agent' : 'aw-msg-patient'}`;
+      msgDiv.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <strong style="color: ${role === 'agent' ? 'var(--aw-teal-bright)' : '#FFFFFF'}; font-size: 0.82rem; font-family: var(--aw-font-mono);">
+            ${role === 'agent' ? 'GIA COGNITIVE AGENT' : 'YOU'}
+          </strong>
+          <span class="aw-mono" style="font-size: 0.7rem; color: var(--aw-slate-muted);">${timeStr}</span>
+        </div>
+        <p style="margin: 0;">${content}</p>
+      `;
+      chatBox.appendChild(msgDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('user-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      appendMessage(text, 'patient');
+      input.value = '';
+
+      fetch('http://localhost:5005/webhooks/rest/webhook', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ sender: 'user', message: text }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.length > 0) {
+          data.forEach(response => {
+            appendMessage(response.text, 'agent');
+          });
+        } else {
+          appendMessage("I acknowledge your reflection. Let us focus on grounding and steady breath regulation.", 'agent');
+        }
+      })
+      .catch(error => {
+        console.warn('Rasa local webhook offline or uninitialized:', error);
+        appendMessage("GIA local neural service is currently calibrating. Please practice gentle diaphragmatic breathing or access the Sound Sanctuary while connection establishes.", 'agent');
+      });
+    }
+  </script>
+</body>
+</html>

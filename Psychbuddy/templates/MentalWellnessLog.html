@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Somatic Reflection Journal - AnchorWell</title>
+    <link rel="icon" type="image/png" href="{% static 'img/psychbuddy.png' %}">
+    <link rel="stylesheet" href="{% static 'css/anchorwell.css' %}">
+</head>
+<body>
+    <!-- Top HUD Navigation -->
+    <header class="aw-nav-container">
+        <nav class="aw-nav">
+            <a href="/" class="aw-brand">
+                <div class="aw-brand-symbol">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                        <path d="M2 12h20"></path>
+                    </svg>
+                </div>
+                <div class="aw-brand-text">
+                    <span class="aw-brand-title">AnchorWell</span>
+                    <span class="aw-brand-badge">UNESCO Mental Support Grid</span>
+                </div>
+            </a>
+
+            <div class="aw-telemetry-pill">
+                <span class="aw-status-beacon"></span>
+                <span>SECURE REFLECTION CONSOLE</span>
+            </div>
+
+            <ul class="aw-nav-links">
+                <li class="aw-nav-item"><a href="/" class="aw-nav-link">Portal</a></li>
+                <li class="aw-nav-item"><a href="relaxation" class="aw-nav-link">Sound Sanctuary</a></li>
+                <li class="aw-nav-item"><a href="sessions" class="aw-nav-link">Video Therapy</a></li>
+                <li class="aw-nav-item"><a href="wellnessLog" class="aw-nav-link active">Journal</a></li>
+                <li class="aw-nav-item"><a href="psychiatrist" class="aw-nav-link">Specialists</a></li>
+                <li class="aw-nav-item"><a href="aboutus" class="aw-nav-link">UNESCO Accord</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="aw-main-content">
+        <div class="aw-journal-layout">
+            <!-- Left Editor Console -->
+            <div class="aw-editor-card">
+                <div class="aw-editor-header">
+                    <div>
+                        <div class="aw-hero-eyebrow" style="margin-bottom: 0.5rem;">
+                            <span class="aw-status-beacon"></span>
+                            <span>PATIENT TELEMETRY LOG</span>
+                        </div>
+                        <h1 style="font-size: 2rem;">
+                            Hello, <span style="color: var(--aw-teal-bright);">{{ name|default:"Patient" }}</span>
+                        </h1>
+                        <p style="font-size: 0.9rem; color: var(--aw-slate-muted);">Document daily cognitive states, stress incidents, and somatic reflections.</p>
+                    </div>
+
+                    <a href="wellnesslogdir" class="aw-btn aw-btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span>View Past Logs</span>
+                    </a>
+                </div>
+
+                <!-- Mood Quick Tag Selector -->
+                <div>
+                    <label style="font-size: 0.75rem; font-family: var(--aw-font-mono); text-transform: uppercase; color: var(--aw-slate-muted); display: block; margin-bottom: 0.5rem;">
+                        Quick Somatic State Calibration:
+                    </label>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button type="button" class="aw-tag" style="cursor: pointer;" onclick="appendTag('[SOMATIC: CALM & GROUNDED] ')">+ Calm / Grounded</button>
+                        <button type="button" class="aw-tag" style="cursor: pointer;" onclick="appendTag('[SOMATIC: ELEVATED STRESS TRIGGER] ')">+ Stress Trigger</button>
+                        <button type="button" class="aw-tag" style="cursor: pointer;" onclick="appendTag('[SOMATIC: COGNITIVE OVERWHELM] ')">+ Overwhelmed</button>
+                        <button type="button" class="aw-tag" style="cursor: pointer;" onclick="appendTag('[SOMATIC: SLEEP ARCHITECTURE DISTURBANCE] ')">+ Sleep Issue</button>
+                        <button type="button" class="aw-tag" style="cursor: pointer;" onclick="appendTag('[SOMATIC: MEDITATIVE EQUILIBRIUM] ')">+ Meditative</button>
+                    </div>
+                </div>
+
+                <!-- Submission Form -->
+                <form action="wellnessLog" method="POST" id="journalForm">
+                    {% csrf_token %}
+                    <div class="aw-textarea-wrapper">
+                        <textarea name="tb1" id="journalTextarea" class="aw-journal-textarea" 
+                                  placeholder="Begin your daily cognitive reflection here. Describe events, emotional triggers, bodily sensations, and self-care interventions..." required></textarea>
+                    </div>
+
+                    <div class="aw-editor-meta-bar" style="margin-top: 1rem;">
+                        <span id="awWordCount">0 words (0 characters)</span>
+                        <span>ENCRYPTION: LOCAL MYSQL STORE</span>
+                    </div>
+
+                    <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem;">
+                        <button type="submit" class="aw-btn aw-btn-primary" style="padding: 0.75rem 2rem;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                            <span>Commit Reflection to Grid</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Right Telemetry Sidebar -->
+            <div class="aw-journal-sidebar">
+                <div class="aw-telemetry-box">
+                    <h3>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--aw-teal-bright)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        Clinical Clinical Context
+                    </h3>
+                    <p style="font-size: 0.85rem; color: var(--aw-slate-light); line-height: 1.6;">
+                        Longitudinal reflections provide psychiatric specialists with clear context on emotional baseline variance, cognitive triggers, and circadian sleep-stress cycles.
+                    </p>
+                </div>
+
+                <div class="aw-telemetry-box" style="border-color: rgba(45,212,191,0.3); background: rgba(13,148,136,0.1);">
+                    <h3 style="color: var(--aw-teal-flare);">Export Report</h3>
+                    <p style="font-size: 0.85rem; color: var(--aw-slate-light); line-height: 1.6; margin-bottom: 1.25rem;">
+                        Compile your cumulative reflections into an official UNESCO-standard Microsoft Word (.docx) clinical dossier.
+                    </p>
+                    <a href="wellnessLogFileCreator" class="aw-btn aw-btn-primary" style="width: 100%; font-size: 0.85rem; padding: 0.6rem 1rem;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        <span>Generate DOCX Dossier</span>
+                    </a>
+                </div>
+
+                <div class="aw-telemetry-box">
+                    <h4 style="font-size: 0.85rem; font-family: var(--aw-font-mono); color: var(--aw-slate-muted); text-transform: uppercase; margin-bottom: 0.75rem;">
+                        Session Telemetry
+                    </h4>
+                    <div style="font-family: var(--aw-font-mono); font-size: 0.78rem; color: var(--aw-teal-bright); line-height: 1.8;">
+                        <div>CLIENT: SOVEREIGN DESKTOP</div>
+                        <div>NODE: ANCHORWELL-01</div>
+                        <div>STORAGE: MYSQL RELATIONAL</div>
+                        <div>STATUS: BUFFER READY</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{ alert|safe }}
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="aw-footer">
+        <div class="aw-footer-inner">
+            <div class="aw-footer-col">
+                <div class="aw-brand" style="margin-bottom:1rem;">
+                    <div class="aw-brand-symbol">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                            <path d="M2 12h20"></path>
+                        </svg>
+                    </div>
+                    <div class="aw-brand-text">
+                        <span class="aw-brand-title">AnchorWell</span>
+                        <span class="aw-brand-badge">UNESCO Mental Support Grid</span>
+                    </div>
+                </div>
+                <p style="font-size:0.85rem; color:var(--aw-slate-muted); line-height:1.6;">
+                    Encrypted longitudinal journaling for personalized psychiatric evaluation.
+                </p>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Therapeutic Hubs</h4>
+                <ul>
+                    <li><a href="relaxation">Audio Therapy Sanctuary</a></li>
+                    <li><a href="sessions">Video Therapy Sessions</a></li>
+                    <li><a href="YM">Yoga & Meditation</a></li>
+                    <li><a href="books">Reading Resources</a></li>
+                </ul>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Clinical Grid</h4>
+                <ul>
+                    <li><a href="psychiatrist">Specialist Registry</a></li>
+                    <li><a href="wellnessLog">Reflection Journal</a></li>
+                    <li><a href="wellnesslogdir">Telemetry Archive</a></li>
+                </ul>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Institutional Status</h4>
+                <div style="font-family:var(--aw-font-mono); font-size:0.8rem; color:var(--aw-teal-bright); line-height:1.8;">
+                    <div>LOG: ACTIVE REALTIME SYNC</div>
+                    <div>FORMAT: DOCX CONVERTIBLE</div>
+                </div>
+            </div>
+        </div>
+        <div class="aw-footer-bottom">
+            <span>&copy; 2026 AnchorWell • UNESCO Mental Support Grid Accord.</span>
+        </div>
+    </footer>
+
+    <!-- Core Runtime Scripts -->
+    <script src="{% static 'js/anchorwell.js' %}"></script>
+    <script>
+        function appendTag(tag) {
+            const area = document.getElementById('journalTextarea');
+            if (area) {
+                area.value = tag + area.value;
+                area.focus();
+                area.dispatchEvent(new Event('input'));
+            }
+        }
+    </script>
+</body>
+</html>

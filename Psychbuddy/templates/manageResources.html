@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Resource Hub - AnchorWell</title>
+    <link rel="icon" type="image/png" href="{% static 'img/psychbuddy.png' %}">
+    <link rel="stylesheet" href="{% static 'css/anchorwell.css' %}">
+    <style>
+        :root {
+            --admin-amber: #F59E0B;
+        }
+        .aw-admin-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: calc(100vh - 70px);
+        }
+        .aw-admin-sidebar {
+            background: rgba(11, 15, 35, 0.95);
+            border-right: 1px solid rgba(245, 158, 11, 0.25);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .aw-admin-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            color: var(--aw-slate-light);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            margin-bottom: 0.35rem;
+        }
+        .aw-admin-nav-item:hover, .aw-admin-nav-item.active {
+            background: rgba(245, 158, 11, 0.15);
+            color: #FFFFFF;
+            border-left: 3px solid var(--admin-amber);
+        }
+    </style>
+</head>
+<body style="background-color: #030611;">
+    <!-- Isolated Admin Header -->
+    <header style="width: 100%; border-bottom: 1px solid rgba(245, 158, 11, 0.25); background: rgba(8, 11, 26, 0.95); padding: 0.85rem 2rem; display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(245, 158, 11, 0.15); border: 1px solid var(--admin-amber); display: flex; align-items: center; justify-content: center; color: var(--admin-amber);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+            </div>
+            <div>
+                <span style="font-weight: 800; font-size: 1.15rem; color: #FFFFFF;">AnchorWell</span>
+                <span class="aw-mono" style="font-size: 0.7rem; color: var(--admin-amber); margin-left: 8px;">RESOURCE REPOSITORY CONTROL</span>
+            </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 1.5rem;">
+            <div class="aw-telemetry-pill" style="border-color: rgba(245, 158, 11, 0.4); color: var(--admin-amber);">
+                <span class="aw-status-beacon" style="background: var(--admin-amber);"></span>
+                <span>STORAGE PROTOCOL: /static/</span>
+            </div>
+            <a href="adminlogout" class="aw-btn" style="background: rgba(244,63,94,0.15); border: 1px solid var(--aw-crisis); color: #FDA4AF; padding: 0.35rem 0.85rem; font-size: 0.8rem;">
+                Logout Admin
+            </a>
+        </div>
+    </header>
+
+    <div class="aw-admin-layout">
+        <!-- Admin Navigation Sidebar -->
+        <aside class="aw-admin-sidebar">
+            <div>
+                <nav>
+                    <a href="admin" class="aw-admin-nav-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        <span>Dashboard Overview</span>
+                    </a>
+                    <a href="usersNav" class="aw-admin-nav-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                        <span>User Management</span>
+                    </a>
+                    <a href="manageResources" class="aw-admin-nav-item active">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                        <span>Resource Management</span>
+                    </a>
+                    <a href="admintips" class="aw-admin-nav-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="9" y1="18" x2="15" y2="18"></line><line x1="10" y1="22" x2="14" y2="22"></line><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg>
+                        <span>Clinical Tips</span>
+                    </a>
+                    <a href="adminforum" class="aw-admin-nav-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                        <span>Community Forum</span>
+                    </a>
+                    <a href="appointmentmail" class="aw-admin-nav-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path></svg>
+                        <span>Appointment Queue</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div style="padding-top: 1.5rem; border-top: 1px solid rgba(245, 158, 11, 0.2);">
+                <div class="aw-mono" style="font-size: 0.72rem; color: var(--admin-amber);">STATIC BUFFER: OK</div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main style="padding: 3rem 2.5rem; overflow-y: auto;">
+            <div style="margin-bottom: 2.5rem;">
+                <h1 style="font-size: 2.25rem;">Resource Catalog Management</h1>
+                <p style="color: var(--aw-slate-light); font-size: 0.95rem;">
+                    Upload new psychological multimedia assets or manage existing records. All file streams are ingested as <code class="aw-mono" style="color:var(--admin-amber)">multipart/form-data</code>.
+                </p>
+            </div>
+
+            <!-- Management Hub Grid -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+                <!-- Video Sessions -->
+                <div class="aw-card" style="border-color: rgba(245, 158, 11, 0.3);">
+                    <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Video Therapy Sessions</h3>
+                    <p style="font-size: 0.88rem; color: var(--aw-slate-light); margin-bottom: 1.5rem;">
+                        Upload MP4 video files into specialized categories (Individual, Group, Couple, Trauma).
+                    </p>
+                    <div style="display: flex; gap: 0.75rem;">
+                        <a href="videoRes" class="aw-btn" style="background: var(--admin-amber); color: #060814; font-weight: 700; font-size: 0.85rem; padding: 0.5rem 1rem;">
+                            + Upload Video
+                        </a>
+                        <a href="delVideoSessions" class="aw-btn aw-btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+                            Delete Records
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Audio Resources -->
+                <div class="aw-card" style="border-color: rgba(245, 158, 11, 0.3);">
+                    <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Sound Therapy Audio</h3>
+                    <p style="font-size: 0.88rem; color: var(--aw-slate-light); margin-bottom: 1.5rem;">
+                        Upload MP3 acoustic nature tracks and cover art for the Neuro-Acoustic Sanctuary.
+                    </p>
+                    <div style="display: flex; gap: 0.75rem;">
+                        <a href="audioRes" class="aw-btn" style="background: var(--admin-amber); color: #060814; font-weight: 700; font-size: 0.85rem; padding: 0.5rem 1rem;">
+                            + Upload Audio
+                        </a>
+                        <a href="delAudio" class="aw-btn aw-btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+                            Delete Records
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Reading Resources -->
+                <div class="aw-card" style="border-color: rgba(245, 158, 11, 0.3);">
+                    <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Literature & E-Books</h3>
+                    <p style="font-size: 0.88rem; color: var(--aw-slate-light); margin-bottom: 1.5rem;">
+                        Upload PDF self-help guides, trauma workbooks, and book cover posters.
+                    </p>
+                    <div style="display: flex; gap: 0.75rem;">
+                        <a href="bookRes" class="aw-btn" style="background: var(--admin-amber); color: #060814; font-weight: 700; font-size: 0.85rem; padding: 0.5rem 1rem;">
+                            + Upload Book PDF
+                        </a>
+                        <a href="delBook" class="aw-btn aw-btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+                            Delete Records
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Yoga & Meditation -->
+                <div class="aw-card" style="border-color: rgba(245, 158, 11, 0.3);">
+                    <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Yoga & Meditation</h3>
+                    <p style="font-size: 0.88rem; color: var(--aw-slate-light); margin-bottom: 1.5rem;">
+                        Upload asana posture demonstration images and guided meditation protocols.
+                    </p>
+                    <div style="display: flex; gap: 0.75rem;">
+                        <a href="yRes" class="aw-btn" style="background: var(--admin-amber); color: #060814; font-weight: 700; font-size: 0.85rem; padding: 0.5rem 1rem;">
+                            + Add Yoga Pose
+                        </a>
+                        <a href="mRes" class="aw-btn aw-btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+                            + Add Meditation
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Core Runtime Scripts -->
+    <script src="{% static 'js/anchorwell.js' %}"></script>
+</body>
+</html>

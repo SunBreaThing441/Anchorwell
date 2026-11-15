@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Intelligence Feed - AnchorWell</title>
+    <link rel="icon" type="image/png" href="{% static 'img/psychbuddy.png' %}">
+    <link rel="stylesheet" href="{% static 'css/anchorwell.css' %}">
+</head>
+<body>
+    <!-- Top HUD Navigation -->
+    <header class="aw-nav-container">
+        <nav class="aw-nav">
+            <a href="/" class="aw-brand">
+                <div class="aw-brand-symbol">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                        <path d="M2 12h20"></path>
+                    </svg>
+                </div>
+                <div class="aw-brand-text">
+                    <span class="aw-brand-title">AnchorWell</span>
+                    <span class="aw-brand-badge">UNESCO Mental Support Grid</span>
+                </div>
+            </a>
+
+            <div class="aw-telemetry-pill">
+                <span class="aw-status-beacon"></span>
+                <span>INTELLIGENCE FEED: NEWSAPI.ORG</span>
+            </div>
+
+            <ul class="aw-nav-links">
+                <li class="aw-nav-item"><a href="/" class="aw-nav-link">Portal</a></li>
+                <li class="aw-nav-item"><a href="relaxation" class="aw-nav-link">Sound Sanctuary</a></li>
+                <li class="aw-nav-item"><a href="sessions" class="aw-nav-link">Video Therapy</a></li>
+                <li class="aw-nav-item"><a href="news" class="aw-nav-link active">Intelligence Feed</a></li>
+                <li class="aw-nav-item"><a href="forum" class="aw-nav-link">Community Mesh</a></li>
+                <li class="aw-nav-item"><a href="psychiatrist" class="aw-nav-link">Specialists</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="aw-main-content">
+        <section class="aw-hub-container">
+            <div class="aw-section-header" style="text-align: left; max-width: 850px; margin-bottom: 2.5rem;">
+                <div class="aw-hero-eyebrow" style="margin-bottom: 0.75rem;">
+                    <span class="aw-status-beacon"></span>
+                    <span>GLOBAL MENTAL HEALTH TELEMETRY</span>
+                </div>
+                <h1 style="font-size: 2.5rem; margin-bottom: 0.75rem;">Global Psychological Intelligence Feed</h1>
+                <p style="color: var(--aw-slate-light); font-size: 1.05rem;">
+                    Real-time aggregated research, clinical breakthroughs, and global psychiatric news dispatched via the UNESCO NewsAPI telemetry mesh.
+                </p>
+            </div>
+
+            <!-- News Grid -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 2rem;">
+                {% if news %}
+                {% for mynews in news %}
+                <div class="aw-card" style="display: flex; flex-direction: column; overflow: hidden; padding: 0;">
+                    {% if mynews.image_url %}
+                    <div style="width: 100%; height: 200px; background: var(--aw-indigo-900); overflow: hidden; border-bottom: 1px solid rgba(45,212,191,0.2);">
+                        <img src="{{ mynews.image_url }}" alt="News Telemetry" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;"
+                             onerror="this.style.display='none';">
+                    </div>
+                    {% endif %}
+
+                    <div style="padding: 1.75rem; display: flex; flex-direction: column; gap: 0.85rem; flex-grow: 1;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="aw-tag">RESEARCH FEED</span>
+                            <span class="aw-mono" style="font-size: 0.72rem; color: var(--aw-teal-bright);">
+                                {{ mynews.published|date:"M d, Y"|default:"Verified" }}
+                            </span>
+                        </div>
+
+                        <h3 style="font-size: 1.2rem; line-height: 1.4;">
+                            <a href="{{ mynews.link }}" target="_blank" style="color: #FFFFFF; text-decoration: none;">
+                                {{ mynews.title }}
+                            </a>
+                        </h3>
+
+                        <p style="font-size: 0.88rem; color: var(--aw-slate-light); line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                            {{ mynews.description }}
+                        </p>
+
+                        <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid rgba(45,212,191,0.15);">
+                            <a href="{{ mynews.link }}" target="_blank" class="aw-btn aw-btn-primary" style="width: 100%; font-size: 0.82rem; padding: 0.55rem 1rem;">
+                                <span>Inspect Full Dispatch</span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="aw-card" style="grid-column: 1 / -1; text-align: center; padding: 4rem;">
+                    <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(245,158,11,0.15); border: 1px solid var(--aw-warning); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; color: var(--aw-warning);">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                    </div>
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">External Feed Telemetry Standby</h3>
+                    <p style="color: var(--aw-slate-muted); max-width: 500px; margin: 0 auto 1.5rem;">
+                        No external news articles currently fetched from NewsAPI gateway, or offline mode is engaged.
+                    </p>
+                    <a href="news" class="aw-btn aw-btn-primary">Retry Telemetry Handshake</a>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="aw-footer">
+        <div class="aw-footer-inner">
+            <div class="aw-footer-col">
+                <div class="aw-brand" style="margin-bottom:1rem;">
+                    <div class="aw-brand-symbol">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                            <path d="M2 12h20"></path>
+                        </svg>
+                    </div>
+                    <div class="aw-brand-text">
+                        <span class="aw-brand-title">AnchorWell</span>
+                        <span class="aw-brand-badge">UNESCO Mental Support Grid</span>
+                    </div>
+                </div>
+                <p style="font-size:0.85rem; color:var(--aw-slate-muted); line-height:1.6;">
+                    Curating psychiatric intelligence from global biomedical sources.
+                </p>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Therapeutic Hubs</h4>
+                <ul>
+                    <li><a href="relaxation">Audio Therapy Sanctuary</a></li>
+                    <li><a href="sessions">Video Therapy Sessions</a></li>
+                    <li><a href="YM">Yoga & Meditation</a></li>
+                    <li><a href="books">Reading Resources</a></li>
+                </ul>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Clinical Grid</h4>
+                <ul>
+                    <li><a href="psychiatrist">Specialist Registry</a></li>
+                    <li><a href="wellnessLog">Reflection Journal</a></li>
+                    <li><a href="forum">Community Forum</a></li>
+                </ul>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Institutional Status</h4>
+                <div style="font-family:var(--aw-font-mono); font-size:0.8rem; color:var(--aw-teal-bright); line-height:1.8;">
+                    <div>PROVIDER: NEWSAPI.ORG REST</div>
+                    <div>STATUS: STREAMING ACTIVE</div>
+                </div>
+            </div>
+        </div>
+        <div class="aw-footer-bottom">
+            <span>&copy; 2026 AnchorWell • UNESCO Mental Support Grid Accord.</span>
+        </div>
+    </footer>
+
+    <!-- Core Runtime Scripts -->
+    <script src="{% static 'js/anchorwell.js' %}"></script>
+</body>
+</html>

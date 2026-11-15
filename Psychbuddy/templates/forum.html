@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psychosocial Mesh & Community Forum - AnchorWell</title>
+    <link rel="icon" type="image/png" href="{% static 'img/psychbuddy.png' %}">
+    <link rel="stylesheet" href="{% static 'css/anchorwell.css' %}">
+    <style>
+        .aw-chat-box {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            max-height: 520px;
+            overflow-y: auto;
+            padding: 1.5rem;
+            background: rgba(6, 8, 20, 0.7);
+            border: 1px solid rgba(45, 212, 191, 0.2);
+            border-radius: 18px;
+            scroll-behavior: smooth;
+        }
+        .aw-msg {
+            max-width: 80%;
+            padding: 1rem 1.25rem;
+            border-radius: 16px;
+            line-height: 1.6;
+            font-size: 0.92rem;
+            position: relative;
+        }
+        .aw-msg-patient {
+            align-self: flex-start;
+            background: rgba(20, 27, 77, 0.6);
+            border: 1px solid rgba(45, 212, 191, 0.2);
+            border-bottom-left-radius: 4px;
+        }
+        .aw-msg-admin {
+            align-self: flex-start;
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            border-left: 4px solid var(--aw-warning);
+        }
+        .aw-msg-self {
+            align-self: flex-end;
+            background: rgba(13, 148, 136, 0.25);
+            border: 1px solid var(--aw-teal-bright);
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 0 15px rgba(20, 184, 166, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Top HUD Navigation -->
+    <header class="aw-nav-container">
+        <nav class="aw-nav">
+            <a href="/" class="aw-brand">
+                <div class="aw-brand-symbol">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                        <path d="M2 12h20"></path>
+                    </svg>
+                </div>
+                <div class="aw-brand-text">
+                    <span class="aw-brand-title">AnchorWell</span>
+                    <span class="aw-brand-badge">UNESCO Mental Support Grid</span>
+                </div>
+            </a>
+
+            <div class="aw-telemetry-pill">
+                <span class="aw-status-beacon"></span>
+                <span>PEER SUPPORT MESH ONLINE</span>
+            </div>
+
+            <ul class="aw-nav-links">
+                <li class="aw-nav-item"><a href="/" class="aw-nav-link">Portal</a></li>
+                <li class="aw-nav-item"><a href="relaxation" class="aw-nav-link">Sound Sanctuary</a></li>
+                <li class="aw-nav-item"><a href="sessions" class="aw-nav-link">Video Therapy</a></li>
+                <li class="aw-nav-item"><a href="forum" class="aw-nav-link active">Community Mesh</a></li>
+                <li class="aw-nav-item"><a href="wellnessLog" class="aw-nav-link">Journal</a></li>
+                <li class="aw-nav-item"><a href="psychiatrist" class="aw-nav-link">Specialists</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="aw-main-content">
+        <section class="aw-hub-container" style="max-width: 1000px;">
+            <div class="aw-section-header" style="text-align: left; margin-bottom: 2rem;">
+                <div class="aw-hero-eyebrow" style="margin-bottom: 0.75rem;">
+                    <span class="aw-status-beacon"></span>
+                    <span>SECURE PSYCHOSOCIAL DISCOURSE</span>
+                </div>
+                <h1 style="font-size: 2.5rem; margin-bottom: 0.75rem;">UNESCO Peer Support Mesh</h1>
+                <p style="color: var(--aw-slate-light); font-size: 1.05rem;">
+                    An empathetic, moderated peer-discussion forum connecting individuals with certified psychiatric moderators and fellow patients.
+                </p>
+            </div>
+
+            <!-- Chat Console Card -->
+            <div class="aw-card" style="padding: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(45,212,191,0.15);">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span class="aw-status-beacon"></span>
+                        <h3 style="font-size: 1.15rem;">Live Peer Channel</h3>
+                    </div>
+                    <span class="aw-tag" style="background: rgba(16,185,129,0.15); color: #6EE7B7; border-color: #10B981;">
+                        MODERATOR SUPERVISED
+                    </span>
+                </div>
+
+                <!-- Chat Messages Stream -->
+                <div class="aw-chat-box" id="chat-box">
+                    {% if info2 %}
+                    {% for msg in info2 %}
+                    <div class="aw-msg {% if msg.admin == 'Admin' %}aw-msg-admin{% else %}aw-msg-patient{% endif %}">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <span style="font-weight: 700; font-size: 0.85rem; color: {% if msg.admin == 'Admin' %}#FDE68A{% else %}var(--aw-teal-bright){% endif %};">
+                                {{ msg.name }} 
+                                <span class="aw-tag" style="font-size: 0.65rem; padding: 1px 6px; margin-left: 4px; {% if msg.admin == 'Admin' %}background:rgba(245,158,11,0.2); border-color:#F59E0B; color:#FDE68A;{% endif %}">
+                                    {{ msg.admin|default:"PATIENT"|upper }}
+                                </span>
+                            </span>
+                            <span class="aw-mono" style="font-size: 0.7rem; color: var(--aw-slate-muted);">{{ msg.ctime }}</span>
+                        </div>
+                        <p style="color: var(--aw-white-sterile); margin: 0;">{{ msg.msg }}</p>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                    {% if info %}
+                    {% for msg in info %}
+                    <div class="aw-msg aw-msg-self">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <span style="font-weight: 700; font-size: 0.85rem; color: #FFFFFF;">
+                                You ({{ msg.name }})
+                            </span>
+                            <span class="aw-mono" style="font-size: 0.7rem; color: #A7F3D0;">{{ msg.ctime }}</span>
+                        </div>
+                        <p style="color: #FFFFFF; margin: 0;">{{ msg.msg }}</p>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+
+                <!-- Live Message Dispatch Form -->
+                <form id="message-form" style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+                    {% csrf_token %}
+                    <input type="text" id="user-input" name="msg" class="aw-form-input" 
+                           placeholder="Type a supportive thought, question, or reflection..." required 
+                           style="flex-grow: 1;">
+                    <button type="submit" id="forumSendBtn" class="aw-btn aw-btn-primary" style="padding: 0 1.5rem; shrink: 0;">
+                        <span>Broadcast</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="aw-footer">
+        <div class="aw-footer-inner">
+            <div class="aw-footer-col">
+                <div class="aw-brand" style="margin-bottom:1rem;">
+                    <div class="aw-brand-symbol">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                            <path d="M2 12h20"></path>
+                        </svg>
+                    </div>
+                    <div class="aw-brand-text">
+                        <span class="aw-brand-title">AnchorWell</span>
+                        <span class="aw-brand-badge">UNESCO Mental Support Grid</span>
+                    </div>
+                </div>
+                <p style="font-size:0.85rem; color:var(--aw-slate-muted); line-height:1.6;">
+                    Providing continuous peer-support and community connection.
+                </p>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Therapeutic Hubs</h4>
+                <ul>
+                    <li><a href="relaxation">Audio Therapy Sanctuary</a></li>
+                    <li><a href="sessions">Video Therapy Sessions</a></li>
+                    <li><a href="YM">Yoga & Meditation</a></li>
+                    <li><a href="books">Reading Resources</a></li>
+                </ul>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Clinical Grid</h4>
+                <ul>
+                    <li><a href="psychiatrist">Specialist Registry</a></li>
+                    <li><a href="wellnessLog">Reflection Journal</a></li>
+                    <li><a href="news">Intelligence Feed</a></li>
+                </ul>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Institutional Status</h4>
+                <div style="font-family:var(--aw-font-mono); font-size:0.8rem; color:var(--aw-teal-bright); line-height:1.8;">
+                    <div>CHAT PROTOCOL: ASYNC HTTP/1.1</div>
+                    <div>ENCRYPTION: AES-256 SECURED</div>
+                </div>
+            </div>
+        </div>
+        <div class="aw-footer-bottom">
+            <span>&copy; 2026 AnchorWell • UNESCO Mental Support Grid Accord.</span>
+        </div>
+    </footer>
+
+    <!-- Core Runtime Scripts -->
+    <script src="{% static 'js/anchorwell.js' %}"></script>
+    <script>
+        // Scroll chat box to bottom on initial render
+        const chatBox = document.getElementById('chat-box');
+        if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
+
+        // Async Message Form Binding
+        document.getElementById('message-form')?.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const input = document.getElementById('user-input');
+            const msg = input.value.trim();
+            if (!msg) return;
+
+            const sendBtn = document.getElementById('forumSendBtn');
+            sendBtn.disabled = true;
+
+            const formData = new FormData();
+            formData.append('msg', msg);
+
+            fetch('forum', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'X-CSRFToken': getCsrfToken(),
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    const bubble = document.createElement('div');
+                    bubble.className = 'aw-msg aw-msg-self';
+                    bubble.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <span style="font-weight: 700; font-size: 0.85rem; color: #FFFFFF;">You</span>
+                            <span class="aw-mono" style="font-size: 0.7rem; color: #A7F3D0;">Just now</span>
+                        </div>
+                        <p style="color: #FFFFFF; margin: 0;">${escapeHtml(data.msg)}</p>
+                    `;
+                    chatBox.appendChild(bubble);
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                    input.value = '';
+                } else {
+                    renderToast("Failed to post message: " + (data.error || 'Server error'), "error");
+                }
+            })
+            .catch(err => {
+                console.error("Forum dispatch failed:", err);
+                renderToast("Network anomaly while broadcasting message.", "error");
+            })
+            .finally(() => {
+                sendBtn.disabled = false;
+            });
+        });
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function getCsrfToken() {
+            const match = document.cookie.match(/(^|;\s*)(csrftoken)=([^;]*)/);
+            return match ? decodeURIComponent(match[3]) : '';
+        }
+    </script>
+</body>
+</html>

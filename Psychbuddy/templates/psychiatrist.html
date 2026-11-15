@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Specialist Registry - AnchorWell</title>
+    <link rel="icon" type="image/png" href="{% static 'img/psychbuddy.png' %}">
+    <link rel="stylesheet" href="{% static 'css/anchorwell.css' %}">
+</head>
+<body>
+    <!-- Top HUD Navigation -->
+    <header class="aw-nav-container">
+        <nav class="aw-nav">
+            <a href="/" class="aw-brand">
+                <div class="aw-brand-symbol">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                        <path d="M2 12h20"></path>
+                    </svg>
+                </div>
+                <div class="aw-brand-text">
+                    <span class="aw-brand-title">AnchorWell</span>
+                    <span class="aw-brand-badge">UNESCO Mental Support Grid</span>
+                </div>
+            </a>
+
+            <div class="aw-telemetry-pill">
+                <span class="aw-status-beacon"></span>
+                <span>SPECIALIST NETWORK VERIFIED</span>
+            </div>
+
+            <ul class="aw-nav-links">
+                <li class="aw-nav-item"><a href="/" class="aw-nav-link">Portal</a></li>
+                <li class="aw-nav-item"><a href="relaxation" class="aw-nav-link">Sound Sanctuary</a></li>
+                <li class="aw-nav-item"><a href="sessions" class="aw-nav-link">Video Therapy</a></li>
+                <li class="aw-nav-item"><a href="wellnessLog" class="aw-nav-link">Journal</a></li>
+                <li class="aw-nav-item"><a href="psychiatrist" class="aw-nav-link active">Specialists</a></li>
+                <li class="aw-nav-item"><a href="aboutus" class="aw-nav-link">UNESCO Accord</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="aw-main-content">
+        <section class="aw-hub-container">
+            <div class="aw-section-header" style="text-align: left; max-width: 850px; margin-bottom: 2.5rem;">
+                <div class="aw-hero-eyebrow" style="margin-bottom: 0.75rem;">
+                    <span class="aw-status-beacon"></span>
+                    <span>MULTILATERAL PSYCHIATRIC REGISTRY</span>
+                </div>
+                <h1 style="font-size: 2.5rem; margin-bottom: 0.75rem;">Licensed Psychiatric Specialists</h1>
+                <p style="color: var(--aw-slate-light); font-size: 1.05rem;">
+                    Connect directly with verified clinical psychiatrists and neuropsychologists. Consultation bookings securely route your longitudinal wellness reflections directly into your physician's clinical queue.
+                </p>
+            </div>
+
+            <!-- Doctor Directory Grid -->
+            <div class="aw-specialist-grid">
+                {% if Data %}
+                {% for gt in Data %}
+                <div class="aw-specialist-card">
+                    <div class="aw-specialist-header">
+                        <img src="{% static gt.picture %}" alt="{{ gt.name }}" class="aw-specialist-avatar">
+                        <div style="flex-grow: 1;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                <h3 style="font-size: 1.25rem;">{{ gt.name }}</h3>
+                                <span class="aw-tag" style="background: rgba(16,185,129,0.15); color: #6EE7B7; border-color: #10B981;">
+                                    ★ {{ gt.rating }}
+                                </span>
+                            </div>
+                            <div class="aw-mono" style="font-size: 0.75rem; color: var(--aw-teal-bright); margin-top: 2px;">
+                                {{ gt.education }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Telemetry Metrics Grid -->
+                    <div class="aw-specialist-telemetry">
+                        <div class="aw-telemetry-item">
+                            <span class="aw-telemetry-label">Clinical Experience</span>
+                            <span class="aw-telemetry-value">{{ gt.experience }}</span>
+                        </div>
+                        <div class="aw-telemetry-item">
+                            <span class="aw-telemetry-label">Jurisdiction</span>
+                            <span class="aw-telemetry-value">{{ gt.location }}</span>
+                        </div>
+                    </div>
+
+                    <p style="font-size: 0.88rem; color: var(--aw-slate-light); line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                        {{ gt.description }}
+                    </p>
+
+                    <!-- Interactive Action Pair -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: auto; padding-top: 1rem; border-top: 1px solid rgba(45,212,191,0.15);">
+                        <!-- Direct Instant Booking Modal Trigger -->
+                        <button type="button" 
+                                onclick="openBookingModal('{{ gt.name }}', '{{ gt.rating }}', '{{ gt.education }}', '{{ gt.location }}')" 
+                                class="aw-btn aw-btn-primary" 
+                                style="font-size: 0.82rem; padding: 0.55rem 0.75rem;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <span>Book Visit</span>
+                        </button>
+
+                        <!-- Comprehensive Bio Page Form -->
+                        <form action="psychinfo" method="POST" style="margin: 0;">
+                            {% csrf_token %}
+                            <input type="hidden" name="psychname" value="{{ gt.name }}">
+                            <button type="submit" class="aw-btn aw-btn-secondary" style="font-size: 0.82rem; padding: 0.55rem 0.75rem; width: 100%;">
+                                <span>Full Dossier</span> &rarr;
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="aw-card" style="grid-column: 1 / -1; text-align: center; padding: 4rem;">
+                    <p style="color: var(--aw-slate-muted);">No psychiatrists currently listed in directory.</p>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="aw-footer">
+        <div class="aw-footer-inner">
+            <div class="aw-footer-col">
+                <div class="aw-brand" style="margin-bottom:1rem;">
+                    <div class="aw-brand-symbol">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                            <path d="M2 12h20"></path>
+                        </svg>
+                    </div>
+                    <div class="aw-brand-text">
+                        <span class="aw-brand-title">AnchorWell</span>
+                        <span class="aw-brand-badge">UNESCO Mental Support Grid</span>
+                    </div>
+                </div>
+                <p style="font-size:0.85rem; color:var(--aw-slate-muted); line-height:1.6;">
+                    Verified clinical registry connecting patients with licensed psychiatric doctors worldwide.
+                </p>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Therapeutic Hubs</h4>
+                <ul>
+                    <li><a href="relaxation">Audio Therapy Sanctuary</a></li>
+                    <li><a href="sessions">Video Therapy Sessions</a></li>
+                    <li><a href="YM">Yoga & Meditation</a></li>
+                    <li><a href="books">Reading Resources</a></li>
+                </ul>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Clinical Grid</h4>
+                <ul>
+                    <li><a href="psychiatrist">Specialist Registry</a></li>
+                    <li><a href="wellnessLog">Reflection Journal</a></li>
+                    <li><a href="wellnesslogdir">Telemetry Archive</a></li>
+                </ul>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Institutional Status</h4>
+                <div style="font-family:var(--aw-font-mono); font-size:0.8rem; color:var(--aw-teal-bright); line-height:1.8;">
+                    <div>NETWORK: 100% BOARD CERTIFIED</div>
+                    <div>TRANSMISSION: SMTP DISPATCH ACCORD</div>
+                </div>
+            </div>
+        </div>
+        <div class="aw-footer-bottom">
+            <span>&copy; 2026 AnchorWell • UNESCO Mental Support Grid Accord.</span>
+        </div>
+    </footer>
+
+    <!-- Core Runtime Scripts -->
+    <script src="{% static 'js/anchorwell.js' %}"></script>
+</body>
+</html>

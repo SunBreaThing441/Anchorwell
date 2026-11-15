@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrative Command Console - AnchorWell</title>
+    <link rel="icon" type="image/png" href="{% static 'img/psychbuddy.png' %}">
+    <link rel="stylesheet" href="{% static 'css/anchorwell.css' %}">
+    <style>
+        :root {
+            --admin-amber: #F59E0B;
+            --admin-amber-glow: rgba(245, 158, 11, 0.3);
+            --admin-violet: #8B5CF6;
+        }
+        .aw-admin-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: calc(100vh - 70px);
+        }
+        .aw-admin-sidebar {
+            background: rgba(11, 15, 35, 0.95);
+            border-right: 1px solid rgba(245, 158, 11, 0.25);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .aw-admin-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            color: var(--aw-slate-light);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            margin-bottom: 0.35rem;
+        }
+        .aw-admin-nav-item:hover, .aw-admin-nav-item.active {
+            background: rgba(245, 158, 11, 0.15);
+            color: #FFFFFF;
+            border-left: 3px solid var(--admin-amber);
+        }
+    </style>
+</head>
+<body style="background-color: #030611;">
+    <!-- Isolated Admin Header -->
+    <header style="width: 100%; border-bottom: 1px solid rgba(245, 158, 11, 0.25); background: rgba(8, 11, 26, 0.95); padding: 0.85rem 2rem; display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(245, 158, 11, 0.15); border: 1px solid var(--admin-amber); display: flex; align-items: center; justify-content: center; color: var(--admin-amber);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+            </div>
+            <div>
+                <span style="font-weight: 800; font-size: 1.15rem; color: #FFFFFF;">AnchorWell</span>
+                <span class="aw-mono" style="font-size: 0.7rem; color: var(--admin-amber); margin-left: 8px;">ADMINISTRATIVE CONSOLE</span>
+            </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 1.5rem;">
+            <div class="aw-telemetry-pill" style="border-color: rgba(245, 158, 11, 0.4); color: var(--admin-amber);">
+                <span class="aw-status-beacon" style="background: var(--admin-amber); box-shadow: 0 0 10px var(--admin-amber);"></span>
+                <span>ADMIN PRIVILEGE ACTIVE</span>
+            </div>
+            <a href="adminlogout" class="aw-btn" style="background: rgba(244,63,94,0.15); border: 1px solid var(--aw-crisis); color: #FDA4AF; padding: 0.35rem 0.85rem; font-size: 0.8rem;">
+                Logout Admin
+            </a>
+        </div>
+    </header>
+
+    <div class="aw-admin-layout">
+        <!-- Admin Navigation Sidebar -->
+        <aside class="aw-admin-sidebar">
+            <div>
+                <div style="margin-bottom: 2rem;">
+                    <div class="aw-mono" style="font-size: 0.72rem; color: var(--admin-amber); text-transform: uppercase;">
+                        AUTHENTICATED OPERATOR
+                    </div>
+                    <div style="font-weight: 700; font-size: 1.1rem; color: #FFFFFF;">System Administrator</div>
+                    <div style="font-size: 0.75rem; color: var(--aw-slate-muted);">Node: PRIMARY-8000</div>
+                </div>
+
+                <nav>
+                    <a href="admin" class="aw-admin-nav-item active">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        <span>Dashboard Overview</span>
+                    </a>
+                    <a href="usersNav" class="aw-admin-nav-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        <span>User Management</span>
+                    </a>
+                    <a href="manageResources" class="aw-admin-nav-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                        <span>Resource Management</span>
+                    </a>
+                    <a href="admintips" class="aw-admin-nav-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="9" y1="18" x2="15" y2="18"></line><line x1="10" y1="22" x2="14" y2="22"></line><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg>
+                        <span>Clinical Tips Editor</span>
+                    </a>
+                    <a href="adminforum" class="aw-admin-nav-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                        <span>Community Forum</span>
+                    </a>
+                    <a href="appointmentmail" class="aw-admin-nav-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        <span>Appointment Queue</span>
+                    </a>
+                    <a href="feedbackinfo" class="aw-admin-nav-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                        <span>Patient Feedback</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div style="padding-top: 1.5rem; border-top: 1px solid rgba(245, 158, 11, 0.2);">
+                <div class="aw-mono" style="font-size: 0.72rem; color: var(--admin-amber);">INACTIVITY LOCK: 15m</div>
+                <div style="font-size: 0.7rem; color: var(--aw-slate-muted); margin-top: 4px;">PyMySQL • Host localhost:3306</div>
+            </div>
+        </aside>
+
+        <!-- Admin Content Stage -->
+        <main style="padding: 3rem 2.5rem; overflow-y: auto;">
+            <div style="margin-bottom: 2.5rem;">
+                <div class="aw-tag" style="background: rgba(245, 158, 11, 0.15); color: #FDE68A; border-color: var(--admin-amber); margin-bottom: 0.5rem;">
+                    ADMINISTRATIVE HUB
+                </div>
+                <h1 style="font-size: 2.25rem;">Control Center & Operations</h1>
+                <p style="color: var(--aw-slate-light); font-size: 0.95rem;">
+                    Direct telemetry monitoring, user database access, resource dispatching, and doctor-patient queue management.
+                </p>
+            </div>
+
+            <!-- Telemetry Stat Cards -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+                <div class="aw-card" style="border-color: rgba(245, 158, 11, 0.3);">
+                    <div class="aw-mono" style="font-size: 0.75rem; color: var(--admin-amber);">PERSISTENCE ENGINE</div>
+                    <div style="font-size: 1.75rem; font-weight: 800; margin: 0.5rem 0;">MySQL 3306</div>
+                    <div style="font-size: 0.8rem; color: #10B981;">PyMySQL Pool: ONLINE</div>
+                </div>
+
+                <div class="aw-card" style="border-color: rgba(245, 158, 11, 0.3);">
+                    <div class="aw-mono" style="font-size: 0.75rem; color: var(--admin-amber);">ACTIVE CLINICAL SESSIONS</div>
+                    <div style="font-size: 1.75rem; font-weight: 800; margin: 0.5rem 0;">6 Modalities</div>
+                    <div style="font-size: 0.8rem; color: var(--aw-teal-bright);">Storage: /static/sessions/</div>
+                </div>
+
+                <div class="aw-card" style="border-color: rgba(245, 158, 11, 0.3);">
+                    <div class="aw-mono" style="font-size: 0.75rem; color: var(--admin-amber);">SOUND SANCTUARY</div>
+                    <div style="font-size: 1.75rem; font-weight: 800; margin: 0.5rem 0;">432 Hz Solfeggio</div>
+                    <div style="font-size: 0.8rem; color: var(--aw-teal-bright);">Audio Tracks Calibrated</div>
+                </div>
+
+                <div class="aw-card" style="border-color: rgba(245, 158, 11, 0.3);">
+                    <div class="aw-mono" style="font-size: 0.75rem; color: var(--admin-amber);">SECURITY STANDARD</div>
+                    <div style="font-size: 1.75rem; font-weight: 800; margin: 0.5rem 0;">HEX ENCODED</div>
+                    <div style="font-size: 0.8rem; color: #10B981;">Strict Admin Isolation</div>
+                </div>
+            </div>
+
+            <!-- Quick Action Hub -->
+            <div class="aw-card" style="border-color: rgba(245, 158, 11, 0.3); padding: 2.5rem;">
+                <h3 style="font-size: 1.3rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 8px;">
+                    <span class="aw-status-beacon" style="background: var(--admin-amber);"></span>
+                    Administrative Action Modules
+                </h3>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                    <a href="usersNav" style="text-decoration: none;">
+                        <div style="background: rgba(6,8,20,0.6); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 14px; padding: 1.5rem; transition: transform 0.2s ease;">
+                            <h4 style="color: #FFFFFF; font-size: 1.1rem; margin-bottom: 0.4rem;">User Directory & Deletions</h4>
+                            <p style="color: var(--aw-slate-light); font-size: 0.85rem; line-height: 1.5;">Audit user profiles and manage account removals via usersNav.</p>
+                        </div>
+                    </a>
+
+                    <a href="manageResources" style="text-decoration: none;">
+                        <div style="background: rgba(6,8,20,0.6); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 14px; padding: 1.5rem; transition: transform 0.2s ease;">
+                            <h4 style="color: #FFFFFF; font-size: 1.1rem; margin-bottom: 0.4rem;">Upload Therapy Resources</h4>
+                            <p style="color: var(--aw-slate-light); font-size: 0.85rem; line-height: 1.5;">Upload video sessions, audio therapy MP3s, books, and yoga routines.</p>
+                        </div>
+                    </a>
+
+                    <a href="appointmentmail" style="text-decoration: none;">
+                        <div style="background: rgba(6,8,20,0.6); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 14px; padding: 1.5rem; transition: transform 0.2s ease;">
+                            <h4 style="color: #FFFFFF; font-size: 1.1rem; margin-bottom: 0.4rem;">Appointment Mail Dispatches</h4>
+                            <p style="color: var(--aw-slate-light); font-size: 0.85rem; line-height: 1.5;">Review and manually confirm psychiatric consultation appointment requests.</p>
+                        </div>
+                    </a>
+
+                    <a href="adminforum" style="text-decoration: none;">
+                        <div style="background: rgba(6,8,20,0.6); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 14px; padding: 1.5rem; transition: transform 0.2s ease;">
+                            <h4 style="color: #FFFFFF; font-size: 1.1rem; margin-bottom: 0.4rem;">Community Moderation</h4>
+                            <p style="color: var(--aw-slate-light); font-size: 0.85rem; line-height: 1.5;">Post administrative announcements and moderate user discussions.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Core Runtime Scripts -->
+    <script src="{% static 'js/anchorwell.js' %}"></script>
+    <script>
+        // Mark administrative token as authenticated in sessionStorage
+        sessionStorage.setItem('aw_admin_session', 'ACTIVE_' + Date.now());
+    </script>
+</body>
+</html>

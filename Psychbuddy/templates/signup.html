@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Registration: Step 3 - AnchorWell</title>
+    <link rel="icon" type="image/png" href="{% static 'img/psychbuddy.png' %}">
+    <link rel="stylesheet" href="{% static 'css/anchorwell.css' %}">
+</head>
+<body style="display: flex; flex-direction: column; min-height: 100vh;">
+    <!-- Top HUD Navigation -->
+    <header class="aw-nav-container">
+        <nav class="aw-nav">
+            <a href="/" class="aw-brand">
+                <div class="aw-brand-symbol">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                        <path d="M2 12h20"></path>
+                    </svg>
+                </div>
+                <div class="aw-brand-text">
+                    <span class="aw-brand-title">AnchorWell</span>
+                    <span class="aw-brand-badge">UNESCO Mental Support Grid</span>
+                </div>
+            </a>
+
+            <div class="aw-telemetry-pill">
+                <span class="aw-status-beacon"></span>
+                <span>STEP 03: CLINICAL PROFILE & SECURITY ACCORD</span>
+            </div>
+
+            <ul class="aw-nav-links">
+                <li class="aw-nav-item"><a href="/" class="aw-nav-link">Portal</a></li>
+                <li class="aw-nav-item"><a href="signin" class="aw-btn aw-btn-secondary" style="padding:0.45rem 1rem; font-size:0.85rem;">Sign In</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="aw-main-content" style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 3rem 1.5rem;">
+        <div class="aw-card" style="width: 100%; max-width: 580px; padding: 2.75rem;">
+            <!-- Progress Indicator -->
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="aw-tag" style="background: var(--aw-teal-bright); color: var(--aw-void); font-weight: 700;">STEP 3 / 3</span>
+                    <span class="aw-mono" style="font-size: 0.75rem; color: var(--aw-teal-bright);">PROFILE CREATION</span>
+                </div>
+                <span class="aw-tag" style="background: rgba(16,185,129,0.15); color: #6EE7B7; border-color: #10B981;">
+                    ✓ OTP VERIFIED
+                </span>
+            </div>
+
+            <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Create Your Grid Profile</h2>
+            <p style="font-size: 0.88rem; color: var(--aw-slate-light); margin-bottom: 1.75rem; line-height: 1.6;">
+                Complete your patient demographic profile to initialize your encrypted health record on the AnchorWell grid.
+            </p>
+
+            {% if res %}
+            <div class="aw-tag" style="display: block; margin-bottom: 1.5rem; width: 100%; padding: 0.85rem 1.25rem; font-size: 0.85rem;
+                {% if 'Error' in res or 'Does not' in res %}
+                    background: rgba(244,63,94,0.15); color: #FDA4AF; border-color: var(--aw-crisis);
+                {% else %}
+                    background: rgba(16,185,129,0.15); color: #6EE7B7; border-color: #10B981;
+                {% endif %}">
+                {{ res }}
+            </div>
+            {% endif %}
+
+            <form method="POST" action="signedUp" name="signupfrm" onsubmit="return validateProfileForm()">
+                {% csrf_token %}
+
+                <!-- Full Name -->
+                <div class="aw-form-group">
+                    <label class="aw-form-label">Full Name (Clinical Identifier)</label>
+                    <input type="text" name="tb1" class="aw-form-input" placeholder="e.g. Dr. Jane Doe" maxlength="60" required>
+                </div>
+
+                <!-- Gender & DOB Grid -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 1.25rem;">
+                    <div class="aw-form-group">
+                        <label class="aw-form-label">Biological / Identity Gender</label>
+                        <div style="display: flex; gap: 0.75rem; margin-top: 4px;">
+                            <label style="display: flex; align-items: center; gap: 6px; font-size: 0.85rem; cursor: pointer; color: var(--aw-slate-light);">
+                                <input type="radio" name="rb" value="Male" checked style="accent-color: var(--aw-teal-bright);">
+                                <span>Male</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 6px; font-size: 0.85rem; cursor: pointer; color: var(--aw-slate-light);">
+                                <input type="radio" name="rb" value="Female" style="accent-color: var(--aw-teal-bright);">
+                                <span>Female</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="aw-form-group">
+                        <label class="aw-form-label">Date of Birth</label>
+                        <input type="date" name="tb2" class="aw-form-input" required>
+                    </div>
+                </div>
+
+                <!-- Residential / Clinical Address -->
+                <div class="aw-form-group" style="margin-top: 1.25rem;">
+                    <label class="aw-form-label">Jurisdictional Address</label>
+                    <textarea name="tb3" class="aw-form-input" style="min-height: 80px; resize: vertical;" 
+                              placeholder="City, State / Region, Country" required></textarea>
+                </div>
+
+                <!-- Passphrase & Entropy Meter -->
+                <div class="aw-form-group" style="margin-top: 1.25rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <label class="aw-form-label">Master Account Passphrase</label>
+                        <button type="button" onclick="togglePassVisibility()" style="background: none; border: none; color: var(--aw-teal-bright); font-size: 0.75rem; cursor: pointer;">
+                            <span id="passToggleText">Show Passphrase</span>
+                        </button>
+                    </div>
+
+                    <div style="position: relative;">
+                        <input type="password" name="tb4" id="passInput" class="aw-form-input" 
+                               placeholder="Minimum 8 characters with symbols and digits" required
+                               style="width: 100%; padding-right: 40px;" oninput="assessPasswordStrength(this.value)">
+                    </div>
+
+                    <!-- Entropy Bar -->
+                    <div style="margin-top: 6px;">
+                        <div style="width: 100%; height: 5px; background: rgba(20,27,77,0.8); border-radius: 9999px; overflow: hidden;">
+                            <div id="entropyBar" style="height: 100%; width: 0%; transition: width 0.3s ease, background-color 0.3s ease;"></div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--aw-slate-muted); margin-top: 4px;">
+                            <span>Strength: <span id="strengthLabel">Enter passphrase</span></span>
+                            <span>AES-256 Compatibility Check</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" id="submitBtn" class="aw-btn aw-btn-primary" style="width: 100%; margin-top: 2rem; padding: 0.85rem;">
+                    <span>Complete Registration Accord</span> &rarr;
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="aw-footer" style="margin-top: 0;">
+        <div class="aw-footer-bottom" style="margin-top: 0;">
+            <span>&copy; 2026 AnchorWell • UNESCO Mental Support Grid Accord.</span>
+            <span>Zero-Knowledge Clinical Storage</span>
+        </div>
+    </footer>
+
+    <!-- Core Runtime Scripts -->
+    <script src="{% static 'js/anchorwell.js' %}"></script>
+    <script>
+        function togglePassVisibility() {
+            const pass = document.getElementById('passInput');
+            const toggleText = document.getElementById('passToggleText');
+            if (pass.type === 'password') {
+                pass.type = 'text';
+                toggleText.textContent = 'Hide Passphrase';
+            } else {
+                pass.type = 'password';
+                toggleText.textContent = 'Show Passphrase';
+            }
+        }
+
+        function assessPasswordStrength(val) {
+            const bar = document.getElementById('entropyBar');
+            const label = document.getElementById('strengthLabel');
+            let score = 0;
+
+            if (val.length >= 8) score += 25;
+            if (/[A-Z]/.test(val)) score += 25;
+            if (/[0-9]/.test(val)) score += 25;
+            if (/[^A-Za-z0-9]/.test(val)) score += 25;
+
+            bar.style.width = score + '%';
+
+            if (score <= 25) {
+                bar.style.backgroundColor = 'var(--aw-crisis)';
+                label.textContent = 'Insufficient (Add symbols & uppercase)';
+                label.style.color = 'var(--aw-crisis)';
+            } else if (score <= 50) {
+                bar.style.backgroundColor = 'var(--aw-warning)';
+                label.textContent = 'Moderate (Good, add numbers)';
+                label.style.color = 'var(--aw-warning)';
+            } else if (score <= 75) {
+                bar.style.backgroundColor = 'var(--aw-teal-primary)';
+                label.textContent = 'Strong (Security standard satisfied)';
+                label.style.color = 'var(--aw-teal-bright)';
+            } else {
+                bar.style.backgroundColor = '#10B981';
+                label.textContent = 'Clinical Grade (Optimal Entropy)';
+                label.style.color = '#6EE7B7';
+            }
+        }
+
+        function validateProfileForm() {
+            const pass = document.getElementById('passInput').value;
+            if (pass.length < 8) {
+                alert('Passphrase must be at least 8 characters in length.');
+                return false;
+            }
+            const btn = document.getElementById('submitBtn');
+            btn.innerHTML = '<span class="aw-mono" style="font-size:0.8rem;">INITIALIZING SOVEREIGN ACCOUNT...</span>';
+            btn.style.opacity = '0.7';
+            return true;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Somatic Cognitive Directives - AnchorWell</title>
+    <link rel="icon" type="image/png" href="{% static 'img/psychbuddy.png' %}">
+    <link rel="stylesheet" href="{% static 'css/anchorwell.css' %}">
+</head>
+<body>
+    <!-- Top HUD Navigation -->
+    <header class="aw-nav-container">
+        <nav class="aw-nav">
+            <a href="/" class="aw-brand">
+                <div class="aw-brand-symbol">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                        <path d="M2 12h20"></path>
+                    </svg>
+                </div>
+                <div class="aw-brand-text">
+                    <span class="aw-brand-title">AnchorWell</span>
+                    <span class="aw-brand-badge">UNESCO Mental Support Grid</span>
+                </div>
+            </a>
+
+            <div class="aw-telemetry-pill">
+                <span class="aw-status-beacon"></span>
+                <span>REAL-TIME COGNITIVE TELEMETRY</span>
+            </div>
+
+            <ul class="aw-nav-links">
+                <li class="aw-nav-item"><a href="homepage" class="aw-nav-link">Dashboard</a></li>
+                <li class="aw-nav-item"><a href="relaxation" class="aw-nav-link">Sound Sanctuary</a></li>
+                <li class="aw-nav-item"><a href="sessions" class="aw-nav-link">Video Therapy</a></li>
+                <li class="aw-nav-item"><a href="wellnessLog" class="aw-nav-link">Journal</a></li>
+                <li class="aw-nav-item"><a href="psychiatrist" class="aw-nav-link">Specialists</a></li>
+                <li class="aw-nav-item"><a href="tips" class="aw-nav-link active">Directives</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="aw-main-content">
+        <section class="aw-hub-container">
+            <div class="aw-section-header" style="text-align: left; max-width: 850px; margin-bottom: 2.5rem;">
+                <div class="aw-hero-eyebrow" style="margin-bottom: 0.75rem;">
+                    <span class="aw-status-beacon"></span>
+                    <span>NEURO-ADAPTIVE PROTOCOLS</span>
+                </div>
+                <h1 style="font-size: 2.5rem; margin-bottom: 0.75rem;">Clinical Cognitive Directives</h1>
+                <p style="color: var(--aw-slate-light); font-size: 1.05rem;">
+                    Tailored mental health suggestions, real-time affect calibration, and evidence-based directives synchronized with your UNESCO mental wellness profile.
+                </p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem;">
+                <!-- Personalized Directive Card -->
+                <div class="aw-card">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+                        <span class="aw-tag">PERSONALIZED BIO-CALIBRATION</span>
+                        <div class="aw-telemetry-pill" style="font-size: 0.75rem;">
+                            <span class="aw-status-beacon"></span>
+                            <span>ACTIVE AFFECT SENSOR</span>
+                        </div>
+                    </div>
+
+                    {% if emotion and suggestion %}
+                    <div style="margin-bottom: 1.5rem;">
+                        <div style="font-size: 0.75rem; color: var(--aw-teal-bright); font-family: var(--aw-font-mono); text-transform: uppercase; margin-bottom: 4px;">
+                            IDENTIFIED AFFECT PATTERN
+                        </div>
+                        <h3 style="font-size: 1.4rem; color: #FFFFFF;">{{ emotion }}</h3>
+                    </div>
+
+                    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(45, 212, 191, 0.2); border-radius: 14px; padding: 1.5rem; font-size: 0.92rem; color: var(--aw-slate-light); line-height: 1.7;">
+                        {{ suggestion|safe }}
+                    </div>
+                    {% else %}
+                    <div style="padding: 2.5rem; text-align: center; color: var(--aw-slate-muted);">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom: 1rem; opacity: 0.5;">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        <p style="font-size: 0.9rem;">Baseline equilibrium calibrated. No dysregulated affect detected in current session.</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Admin / Grid Clinical Directives -->
+                <div class="aw-card">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+                        <span class="aw-tag">UNESCO CLINICAL TELEMETRY</span>
+                        <span class="aw-mono" style="font-size: 0.75rem; color: var(--aw-slate-muted);">DAILY GUIDELINE</span>
+                    </div>
+
+                    {% if tips and datetime %}
+                    <div style="margin-bottom: 1.5rem;">
+                        <div style="font-size: 0.75rem; color: var(--aw-teal-bright); font-family: var(--aw-font-mono); text-transform: uppercase; margin-bottom: 4px;">
+                            DISPATCH TIMESTAMP: {{ datetime }}
+                        </div>
+                        <h3 style="font-size: 1.25rem; color: #FFFFFF;">Grid Telemetry Bulletin</h3>
+                    </div>
+
+                    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(45, 212, 191, 0.2); border-radius: 14px; padding: 1.5rem; font-size: 0.92rem; color: var(--aw-slate-light); line-height: 1.7;">
+                        {{ tips }}
+                    </div>
+                    {% else %}
+                    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(45, 212, 191, 0.2); border-radius: 14px; padding: 1.5rem; font-size: 0.92rem; color: var(--aw-slate-light); line-height: 1.7;">
+                        <h4 style="color: #FFFFFF; margin-bottom: 0.5rem;">UNESCO Mind-Body Baseline</h4>
+                        <p>Engage in 15 minutes of slow diaphragmatic breathing (4-7-8 rhythm) paired with restorative ocean frequency harmonics to modulate autonomic nervous tone.</p>
+                    </div>
+                    {% endif %}
+
+                    <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+                        <a href="relaxation" class="aw-btn aw-btn-primary" style="flex: 1; text-align: center;">Enter Sound Sanctuary</a>
+                        <a href="wellnessLog" class="aw-btn aw-btn-secondary" style="flex: 1; text-align: center;">Record Reflection</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="aw-footer">
+        <div class="aw-footer-grid">
+            <div class="aw-footer-col">
+                <div class="aw-brand" style="margin-bottom: 1rem;">
+                    <div class="aw-brand-symbol">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                            <path d="M2 12h20"></path>
+                        </svg>
+                    </div>
+                    <div class="aw-brand-text">
+                        <span class="aw-brand-title">AnchorWell</span>
+                        <span class="aw-brand-badge">UNESCO Mental Support Grid</span>
+                    </div>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--aw-slate-muted); line-height: 1.6;">
+                    Global decentralized psychosocial framework operating in compliance with international mental wellness directives.
+                </p>
+            </div>
+        </div>
+        <div class="aw-footer-bottom">
+            <span>&copy; 2026 AnchorWell • UNESCO Mental Support Grid. All clinical protocols verified.</span>
+        </div>
+    </footer>
+
+    <!-- Core Runtime Scripts -->
+    <script src="{% static 'js/anchorwell.js' %}"></script>
+</body>
+</html>

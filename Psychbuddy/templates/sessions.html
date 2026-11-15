@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Therapy Grid - AnchorWell</title>
+    <link rel="icon" type="image/png" href="{% static 'img/psychbuddy.png' %}">
+    <link rel="stylesheet" href="{% static 'css/anchorwell.css' %}">
+</head>
+<body>
+    <!-- Top HUD Navigation -->
+    <header class="aw-nav-container">
+        <nav class="aw-nav">
+            <a href="/" class="aw-brand">
+                <div class="aw-brand-symbol">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                        <path d="M2 12h20"></path>
+                    </svg>
+                </div>
+                <div class="aw-brand-text">
+                    <span class="aw-brand-title">AnchorWell</span>
+                    <span class="aw-brand-badge">UNESCO Mental Support Grid</span>
+                </div>
+            </a>
+
+            <div class="aw-telemetry-pill">
+                <span class="aw-status-beacon"></span>
+                <span>VIDEO MODALITIES ONLINE</span>
+            </div>
+
+            <ul class="aw-nav-links">
+                <li class="aw-nav-item"><a href="/" class="aw-nav-link">Portal</a></li>
+                <li class="aw-nav-item"><a href="relaxation" class="aw-nav-link">Sound Sanctuary</a></li>
+                <li class="aw-nav-item"><a href="sessions" class="aw-nav-link active">Video Therapy</a></li>
+                <li class="aw-nav-item"><a href="psychiatrist" class="aw-nav-link">Specialists</a></li>
+                <li class="aw-nav-item"><a href="aboutus" class="aw-nav-link">UNESCO Accord</a></li>
+                <li class="aw-nav-item"><a href="signin" class="aw-btn aw-btn-primary" style="padding:0.45rem 1.1rem; font-size:0.85rem;">Access Grid</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="aw-main-content">
+        <section class="aw-hub-container">
+            <div class="aw-section-header" style="text-align: left; max-width: 850px; margin-bottom: 2.5rem;">
+                <div class="aw-hero-eyebrow" style="margin-bottom: 0.75rem;">
+                    <span class="aw-status-beacon"></span>
+                    <span>NEURO-VISUAL CLINICAL SESSIONS</span>
+                </div>
+                <h1 style="font-size: 2.5rem; margin-bottom: 0.75rem;">Clinical Video Therapy Catalog</h1>
+                <p style="color: var(--aw-slate-light); font-size: 1.05rem;">
+                    Select an evidence-based modality below. Each category contains guided psychological sessions engineered to help process stress, trauma, emotional grief, and relationship friction.
+                </p>
+            </div>
+
+            <!-- 6 Interactive Modality Cards -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem;">
+                <!-- Modality 1: Individual -->
+                <div class="aw-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="width:100%; height:180px; border-radius:12px; overflow:hidden; margin-bottom:1.25rem; border:1px solid rgba(45,212,191,0.2);">
+                            <img src="{% static 'img/category1.png' %}" alt="Individual Therapy" style="width:100%; height:100%; object-fit:cover;">
+                        </div>
+                        <span class="aw-tag" style="margin-bottom:0.5rem;">MODALITY 01</span>
+                        <h3 style="font-size: 1.35rem; margin-bottom: 0.5rem;">Individual Therapy</h3>
+                        <p style="font-size: 0.9rem; color: var(--aw-slate-light); line-height: 1.6;">
+                            Personalized self-guided cognitive restructuring exercises focusing on internal monologues, anxiety management, and somatic regulation.
+                        </p>
+                    </div>
+                    <a href="individualtherapy" class="aw-btn aw-btn-primary" style="margin-top: 1.5rem; width: 100%;">
+                        <span>Launch Sessions</span> &rarr;
+                    </a>
+                </div>
+
+                <!-- Modality 2: Couples -->
+                <div class="aw-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="width:100%; height:180px; border-radius:12px; overflow:hidden; margin-bottom:1.25rem; border:1px solid rgba(45,212,191,0.2);">
+                            <img src="{% static 'img/category2.png' %}" alt="Couple Therapy" style="width:100%; height:100%; object-fit:cover;">
+                        </div>
+                        <span class="aw-tag" style="margin-bottom:0.5rem;">MODALITY 02</span>
+                        <h3 style="font-size: 1.35rem; margin-bottom: 0.5rem;">Couple Therapy</h3>
+                        <p style="font-size: 0.9rem; color: var(--aw-slate-light); line-height: 1.6;">
+                            Guided relational attunement, conflict mediation frameworks, and non-violent communication protocols for partners.
+                        </p>
+                    </div>
+                    <a href="coupletherapy" class="aw-btn aw-btn-primary" style="margin-top: 1.5rem; width: 100%;">
+                        <span>Launch Sessions</span> &rarr;
+                    </a>
+                </div>
+
+                <!-- Modality 3: Family -->
+                <div class="aw-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="width:100%; height:180px; border-radius:12px; overflow:hidden; margin-bottom:1.25rem; border:1px solid rgba(45,212,191,0.2);">
+                            <img src="{% static 'img/category3.png' %}" alt="Family Therapy" style="width:100%; height:100%; object-fit:cover;">
+                        </div>
+                        <span class="aw-tag" style="margin-bottom:0.5rem;">MODALITY 03</span>
+                        <h3 style="font-size: 1.35rem; margin-bottom: 0.5rem;">Family Therapy</h3>
+                        <p style="font-size: 0.9rem; color: var(--aw-slate-light); line-height: 1.6;">
+                            Systemic family dynamics processing, multi-generational boundary harmonization, and communal healing sequences.
+                        </p>
+                    </div>
+                    <a href="familytherapy" class="aw-btn aw-btn-primary" style="margin-top: 1.5rem; width: 100%;">
+                        <span>Launch Sessions</span> &rarr;
+                    </a>
+                </div>
+
+                <!-- Modality 4: Group -->
+                <div class="aw-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="width:100%; height:180px; border-radius:12px; overflow:hidden; margin-bottom:1.25rem; border:1px solid rgba(45,212,191,0.2);">
+                            <img src="{% static 'img/category4.png' %}" alt="Group Therapy" style="width:100%; height:100%; object-fit:cover;">
+                        </div>
+                        <span class="aw-tag" style="margin-bottom:0.5rem;">MODALITY 04</span>
+                        <h3 style="font-size: 1.35rem; margin-bottom: 0.5rem;">Group Therapy</h3>
+                        <p style="font-size: 0.9rem; color: var(--aw-slate-light); line-height: 1.6;">
+                            Simulated peer-circle grounding sessions to normalize shared vulnerabilities and reinforce multilateral human connection.
+                        </p>
+                    </div>
+                    <a href="grouptherapy" class="aw-btn aw-btn-primary" style="margin-top: 1.5rem; width: 100%;">
+                        <span>Launch Sessions</span> &rarr;
+                    </a>
+                </div>
+
+                <!-- Modality 5: Heartbreak -->
+                <div class="aw-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="width:100%; height:180px; border-radius:12px; overflow:hidden; margin-bottom:1.25rem; border:1px solid rgba(45,212,191,0.2);">
+                            <img src="{% static 'img/category5.png' %}" alt="Heartbreak Therapy" style="width:100%; height:100%; object-fit:cover;">
+                        </div>
+                        <span class="aw-tag" style="margin-bottom:0.5rem;">MODALITY 05</span>
+                        <h3 style="font-size: 1.35rem; margin-bottom: 0.5rem;">Heartbreak & Grief</h3>
+                        <p style="font-size: 0.9rem; color: var(--aw-slate-light); line-height: 1.6;">
+                            Emotional containment sequences designed to process acute romantic grief, rejection distress, and neural rewiring.
+                        </p>
+                    </div>
+                    <a href="heartbrokentherapy" class="aw-btn aw-btn-primary" style="margin-top: 1.5rem; width: 100%;">
+                        <span>Launch Sessions</span> &rarr;
+                    </a>
+                </div>
+
+                <!-- Modality 6: Trauma -->
+                <div class="aw-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="width:100%; height:180px; border-radius:12px; overflow:hidden; margin-bottom:1.25rem; border:1px solid rgba(45,212,191,0.2);">
+                            <img src="{% static 'img/category6.png' %}" alt="Trauma Therapy" style="width:100%; height:100%; object-fit:cover;">
+                        </div>
+                        <span class="aw-tag" style="margin-bottom:0.5rem; background:rgba(244,63,94,0.15); color:#FDA4AF; border-color:#F43F5E;">MODALITY 06</span>
+                        <h3 style="font-size: 1.35rem; margin-bottom: 0.5rem;">Trauma Processing</h3>
+                        <p style="font-size: 0.9rem; color: var(--aw-slate-light); line-height: 1.6;">
+                            Trauma-informed, somatic titration sessions engineered with soft exits to safely unpack triggers and regain bodily equilibrium.
+                        </p>
+                    </div>
+                    <a href="traumatherapy" class="aw-btn aw-btn-primary" style="margin-top: 1.5rem; width: 100%;">
+                        <span>Launch Sessions</span> &rarr;
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="aw-footer">
+        <div class="aw-footer-inner">
+            <div class="aw-footer-col">
+                <div class="aw-brand" style="margin-bottom:1rem;">
+                    <div class="aw-brand-symbol">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                            <path d="M2 12h20"></path>
+                        </svg>
+                    </div>
+                    <div class="aw-brand-text">
+                        <span class="aw-brand-title">AnchorWell</span>
+                        <span class="aw-brand-badge">UNESCO Mental Support Grid</span>
+                    </div>
+                </div>
+                <p style="font-size:0.85rem; color:var(--aw-slate-muted); line-height:1.6;">
+                    Providing continuous psychoacoustic stabilization and clinical video sessions across browser sessions.
+                </p>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Therapeutic Hubs</h4>
+                <ul>
+                    <li><a href="relaxation">Audio Therapy Sanctuary</a></li>
+                    <li><a href="sessions">Video Therapy Sessions</a></li>
+                    <li><a href="YM">Yoga & Meditation</a></li>
+                    <li><a href="books">Reading Resources</a></li>
+                </ul>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Clinical Grid</h4>
+                <ul>
+                    <li><a href="psychiatrist">Specialist Registry</a></li>
+                    <li><a href="wellnessLog">Reflection Journal</a></li>
+                    <li><a href="wellnesslogdir">Telemetry Archive</a></li>
+                </ul>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Institutional Status</h4>
+                <div style="font-family:var(--aw-font-mono); font-size:0.8rem; color:var(--aw-teal-bright); line-height:1.8;">
+                    <div>MODALITIES: 6 SPECIALIZATIONS</div>
+                    <div>STATUS: READY TO STREAM</div>
+                </div>
+            </div>
+        </div>
+        <div class="aw-footer-bottom">
+            <span>&copy; 2026 AnchorWell • UNESCO Mental Support Grid Accord.</span>
+        </div>
+    </footer>
+
+    <!-- Core Runtime Scripts -->
+    <script src="{% static 'js/anchorwell.js' %}"></script>
+</body>
+</html>

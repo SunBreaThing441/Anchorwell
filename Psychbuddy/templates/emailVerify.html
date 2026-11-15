@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Registration: Step 1 - AnchorWell</title>
+    <link rel="icon" type="image/png" href="{% static 'img/psychbuddy.png' %}">
+    <link rel="stylesheet" href="{% static 'css/anchorwell.css' %}">
+</head>
+<body style="display: flex; flex-direction: column; min-height: 100vh;">
+    <!-- Top HUD Navigation -->
+    <header class="aw-nav-container">
+        <nav class="aw-nav">
+            <a href="/" class="aw-brand">
+                <div class="aw-brand-symbol">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                        <path d="M2 12h20"></path>
+                    </svg>
+                </div>
+                <div class="aw-brand-text">
+                    <span class="aw-brand-title">AnchorWell</span>
+                    <span class="aw-brand-badge">UNESCO Mental Support Grid</span>
+                </div>
+            </a>
+
+            <div class="aw-telemetry-pill">
+                <span class="aw-status-beacon"></span>
+                <span>STEP 01: IDENTITY CHANNEL VERIFICATION</span>
+            </div>
+
+            <ul class="aw-nav-links">
+                <li class="aw-nav-item"><a href="/" class="aw-nav-link">Portal</a></li>
+                <li class="aw-nav-item"><a href="aboutus" class="aw-nav-link">UNESCO Accord</a></li>
+                <li class="aw-nav-item"><a href="signin" class="aw-btn aw-btn-secondary" style="padding:0.45rem 1rem; font-size:0.85rem;">Existing Patient? Sign In</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="aw-main-content" style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 3rem 1.5rem;">
+        <div class="aw-card" style="width: 100%; max-width: 500px; padding: 2.75rem;">
+            <!-- Progress Indicator -->
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="aw-tag" style="background: var(--aw-teal-bright); color: var(--aw-void); font-weight: 700;">STEP 1 / 3</span>
+                    <span class="aw-mono" style="font-size: 0.75rem; color: var(--aw-teal-bright);">CHANNEL DISPATCH</span>
+                </div>
+                <span class="aw-mono" style="font-size: 0.72rem; color: var(--aw-slate-muted);">ENCRYPTED TLS</span>
+            </div>
+
+            <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Initialize Grid Account</h2>
+            <p style="font-size: 0.88rem; color: var(--aw-slate-light); margin-bottom: 2rem; line-height: 1.6;">
+                Provide your mobile contact and email address. A cryptographically generated 6-digit OTP will be dispatched to verify your identity.
+            </p>
+
+            {% if res %}
+            <div class="aw-tag" style="display: block; margin-bottom: 1.5rem; background: rgba(244,63,94,0.15); color: #FDA4AF; border-color: var(--aw-crisis); padding: 0.75rem 1rem;">
+                {{ res }}
+            </div>
+            {% endif %}
+
+            <form method="POST" action="second" name="formV" onsubmit="return validateEmailStep()">
+                {% csrf_token %}
+                <div class="aw-form-group">
+                    <label class="aw-form-label">Patient Mobile Number (10 Digits)</label>
+                    <input type="tel" name="mobile" id="mobileInput" class="aw-form-input" 
+                           placeholder="9876543210" maxlength="10" required
+                           style="letter-spacing: 0.1em; font-family: var(--aw-font-mono);">
+                    <span id="mobileError" style="font-size: 0.75rem; color: var(--aw-crisis); display: none;">
+                        Must be a valid 10-digit mobile number not starting with 0.
+                    </span>
+                </div>
+
+                <div class="aw-form-group" style="margin-top: 1.25rem;">
+                    <label class="aw-form-label">Verified Email Address</label>
+                    <input type="email" name="email" id="emailInput" class="aw-form-input" 
+                           placeholder="patient@unesco-care.org" required>
+                    <span id="emailError" style="font-size: 0.75rem; color: var(--aw-crisis); display: none;">
+                        Please provide a valid standard email address.
+                    </span>
+                </div>
+
+                <button type="submit" id="submitBtn" class="aw-btn aw-btn-primary" style="width: 100%; margin-top: 2rem; padding: 0.85rem;">
+                    <span>Generate & Send 6-Digit OTP</span> &rarr;
+                </button>
+            </form>
+
+            <div style="text-align: center; margin-top: 1.5rem; font-size: 0.82rem; color: var(--aw-slate-muted);">
+                By proceeding, you agree to the <a href="aboutus" style="color: var(--aw-teal-bright);">UNESCO Cognitive Health Charter</a>.
+            </div>
+        </div>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="aw-footer" style="margin-top: 0;">
+        <div class="aw-footer-bottom" style="margin-top: 0;">
+            <span>&copy; 2026 AnchorWell • UNESCO Mental Support Grid Accord.</span>
+            <span>Identity Protocol: OTP SHA-256 Check</span>
+        </div>
+    </footer>
+
+    <!-- Core Runtime Scripts -->
+    <script src="{% static 'js/anchorwell.js' %}"></script>
+    <script>
+        function validateEmailStep() {
+            const mobile = document.getElementById('mobileInput').value.trim();
+            const email = document.getElementById('emailInput').value.trim();
+            const mobileErr = document.getElementById('mobileError');
+            const emailErr = document.getElementById('emailError');
+            
+            const mobileRegex = /^[1-9]\d{9}$/;
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            
+            let isValid = true;
+            
+            if (!mobileRegex.test(mobile)) {
+                mobileErr.style.display = 'block';
+                isValid = false;
+            } else {
+                mobileErr.style.display = 'none';
+            }
+            
+            if (!emailRegex.test(email)) {
+                emailErr.style.display = 'block';
+                isValid = false;
+            } else {
+                emailErr.style.display = 'none';
+            }
+
+            if (isValid) {
+                const btn = document.getElementById('submitBtn');
+                btn.innerHTML = '<span class="aw-mono" style="font-size:0.8rem;">DISPATCHING OTP TRANSMISSION...</span>';
+                btn.style.opacity = '0.7';
+            }
+            
+            return isValid;
+        }
+    </script>
+</body>
+</html>

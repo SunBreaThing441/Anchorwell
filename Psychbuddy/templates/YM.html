@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mind-Body Calibration - AnchorWell</title>
+    <link rel="icon" type="image/png" href="{% static 'img/psychbuddy.png' %}">
+    <link rel="stylesheet" href="{% static 'css/anchorwell.css' %}">
+</head>
+<body>
+    <!-- Top HUD Navigation -->
+    <header class="aw-nav-container">
+        <nav class="aw-nav">
+            <a href="/" class="aw-brand">
+                <div class="aw-brand-symbol">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                        <path d="M2 12h20"></path>
+                    </svg>
+                </div>
+                <div class="aw-brand-text">
+                    <span class="aw-brand-title">AnchorWell</span>
+                    <span class="aw-brand-badge">UNESCO Mental Support Grid</span>
+                </div>
+            </a>
+
+            <div class="aw-telemetry-pill">
+                <span class="aw-status-beacon"></span>
+                <span>SOMATIC CALIBRATION</span>
+            </div>
+
+            <ul class="aw-nav-links">
+                <li class="aw-nav-item"><a href="/" class="aw-nav-link">Portal</a></li>
+                <li class="aw-nav-item"><a href="relaxation" class="aw-nav-link">Sound Sanctuary</a></li>
+                <li class="aw-nav-item"><a href="sessions" class="aw-nav-link">Video Therapy</a></li>
+                <li class="aw-nav-item"><a href="psychiatrist" class="aw-nav-link">Specialists</a></li>
+                <li class="aw-nav-item"><a href="aboutus" class="aw-nav-link">UNESCO Accord</a></li>
+                <li class="aw-nav-item"><a href="signin" class="aw-btn aw-btn-primary" style="padding:0.45rem 1.1rem; font-size:0.85rem;">Access Grid</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="aw-main-content">
+        <section class="aw-hub-container">
+            <div class="aw-section-header" style="text-align: left; max-width: 850px; margin-bottom: 2rem;">
+                <div class="aw-hero-eyebrow" style="margin-bottom: 0.75rem;">
+                    <span class="aw-status-beacon"></span>
+                    <span>SOMATOSENSORY ALIGNMENT</span>
+                </div>
+                <h1 style="font-size: 2.5rem; margin-bottom: 0.75rem;">Mind-Body Calibration Portal</h1>
+                <p style="color: var(--aw-slate-light); font-size: 1.05rem;">
+                    Curated physical asana postures and mindfulness meditation sequences engineered to regulate vagal nerve tone, release stored bodily trauma, and foster somatic stillness.
+                </p>
+            </div>
+
+            <!-- Tab Switcher -->
+            <div style="display: flex; gap: 1rem; margin-bottom: 2.5rem; border-bottom: 1px solid rgba(45,212,191,0.2); padding-bottom: 1rem;">
+                <a href="#yogaSection" class="aw-btn aw-btn-primary" style="padding: 0.5rem 1.25rem;">
+                    <span>Somatic Asanas</span>
+                </a>
+                <a href="#meditationSection" class="aw-btn aw-btn-secondary" style="padding: 0.5rem 1.25rem;">
+                    <span>Guided Meditation</span>
+                </a>
+            </div>
+
+            <!-- Yoga Section -->
+            <div id="yogaSection" style="margin-bottom: 4rem;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+                    <h2 style="font-size: 1.75rem;">Calibrated Asanas</h2>
+                    <span class="aw-tag">VAGUS NERVE ACTIVATION</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 2rem;">
+                    {% if mydata %}
+                    {% for r in mydata %}
+                    <div class="aw-card" style="display: flex; flex-direction: column; overflow: hidden; padding: 0;">
+                        <div style="width: 100%; height: 220px; background: var(--aw-indigo-900); overflow: hidden; border-bottom: 1px solid rgba(45,212,191,0.2);">
+                            <img src="{% static r.r4 %}" alt="{{ r.r1 }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div style="padding: 1.75rem; display: flex; flex-direction: column; gap: 1rem; flex-grow: 1;">
+                            <h3 style="font-size: 1.3rem;">{{ r.r1 }}</h3>
+                            
+                            <div style="background: rgba(6,8,20,0.5); border-radius: 12px; padding: 1rem; border: 1px solid rgba(45,212,191,0.15);">
+                                <h4 style="font-size: 0.8rem; font-family: var(--aw-font-mono); color: var(--aw-teal-bright); margin-bottom: 0.4rem; text-transform: uppercase;">
+                                    Clinical Steps:
+                                </h4>
+                                <div style="font-size: 0.85rem; color: var(--aw-slate-light); line-height: 1.6;">
+                                    {{ r.r2|safe }}
+                                </div>
+                            </div>
+
+                            <div style="background: rgba(20,27,77,0.3); border-radius: 12px; padding: 1rem; border: 1px solid rgba(45,212,191,0.15); margin-top: auto;">
+                                <h4 style="font-size: 0.8rem; font-family: var(--aw-font-mono); color: #5EEAD4; margin-bottom: 0.4rem; text-transform: uppercase;">
+                                    Somatic Benefits:
+                                </h4>
+                                <div style="font-size: 0.85rem; color: var(--aw-slate-light); line-height: 1.6;">
+                                    {{ r.r3|safe }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="aw-card" style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+                        <p style="color: var(--aw-slate-muted);">No yoga posture data found in database.</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Meditation Section -->
+            <div id="meditationSection">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+                    <h2 style="font-size: 1.75rem;">Mindfulness & Meditation Protocols</h2>
+                    <span class="aw-tag" style="background: rgba(139,92,246,0.15); color: #C4B5FD; border-color: #8B5CF6;">NEURAL COGNITION</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2rem;">
+                    {% if mydata2 %}
+                    {% for j in mydata2 %}
+                    <div class="aw-card" style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="aw-tag">MEDITATION</span>
+                            <span class="aw-mono" style="font-size: 0.75rem; color: var(--aw-teal-bright);">PROTOCOL</span>
+                        </div>
+                        <h3 style="font-size: 1.25rem;">{{ j.name }}</h3>
+                        <p style="font-size: 0.9rem; color: var(--aw-slate-light); line-height: 1.7;">
+                            {{ j.desc }}
+                        </p>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="aw-card" style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+                        <p style="color: var(--aw-slate-muted);">No meditation guides found in database.</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="aw-footer">
+        <div class="aw-footer-inner">
+            <div class="aw-footer-col">
+                <div class="aw-brand" style="margin-bottom:1rem;">
+                    <div class="aw-brand-symbol">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                            <path d="M2 12h20"></path>
+                        </svg>
+                    </div>
+                    <div class="aw-brand-text">
+                        <span class="aw-brand-title">AnchorWell</span>
+                        <span class="aw-brand-badge">UNESCO Mental Support Grid</span>
+                    </div>
+                </div>
+                <p style="font-size:0.85rem; color:var(--aw-slate-muted); line-height:1.6;">
+                    Harmonizing mind, breath, and somatic alignment for universal cognitive resilience.
+                </p>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Therapeutic Hubs</h4>
+                <ul>
+                    <li><a href="relaxation">Audio Therapy Sanctuary</a></li>
+                    <li><a href="sessions">Video Therapy Sessions</a></li>
+                    <li><a href="YM">Yoga & Meditation</a></li>
+                    <li><a href="books">Reading Resources</a></li>
+                </ul>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Clinical Grid</h4>
+                <ul>
+                    <li><a href="psychiatrist">Specialist Registry</a></li>
+                    <li><a href="wellnessLog">Reflection Journal</a></li>
+                    <li><a href="wellnesslogdir">Telemetry Archive</a></li>
+                </ul>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Institutional Status</h4>
+                <div style="font-family:var(--aw-font-mono); font-size:0.8rem; color:var(--aw-teal-bright); line-height:1.8;">
+                    <div>ALIGNMENT: SOMATOSENSORY 4-4-4-4</div>
+                    <div>MODE: STRESS REGULATION</div>
+                </div>
+            </div>
+        </div>
+        <div class="aw-footer-bottom">
+            <span>&copy; 2026 AnchorWell • UNESCO Mental Support Grid Accord.</span>
+        </div>
+    </footer>
+
+    <!-- Core Runtime Scripts -->
+    <script src="{% static 'js/anchorwell.js' %}"></script>
+</body>
+</html>

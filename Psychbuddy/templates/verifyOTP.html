@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Registration: Step 2 - AnchorWell</title>
+    <link rel="icon" type="image/png" href="{% static 'img/psychbuddy.png' %}">
+    <link rel="stylesheet" href="{% static 'css/anchorwell.css' %}">
+</head>
+<body style="display: flex; flex-direction: column; min-height: 100vh;">
+    <!-- Top HUD Navigation -->
+    <header class="aw-nav-container">
+        <nav class="aw-nav">
+            <a href="/" class="aw-brand">
+                <div class="aw-brand-symbol">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                        <path d="M2 12h20"></path>
+                    </svg>
+                </div>
+                <div class="aw-brand-text">
+                    <span class="aw-brand-title">AnchorWell</span>
+                    <span class="aw-brand-badge">UNESCO Mental Support Grid</span>
+                </div>
+            </a>
+
+            <div class="aw-telemetry-pill">
+                <span class="aw-status-beacon"></span>
+                <span>STEP 02: CRYPTOGRAPHIC OTP VERIFICATION</span>
+            </div>
+
+            <ul class="aw-nav-links">
+                <li class="aw-nav-item"><a href="/" class="aw-nav-link">Portal</a></li>
+                <li class="aw-nav-item"><a href="signin" class="aw-btn aw-btn-secondary" style="padding:0.45rem 1rem; font-size:0.85rem;">Sign In</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="aw-main-content" style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 3rem 1.5rem;">
+        <div class="aw-card" style="width: 100%; max-width: 520px; padding: 2.75rem;">
+            <!-- Progress Indicator -->
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="aw-tag" style="background: var(--aw-teal-bright); color: var(--aw-void); font-weight: 700;">STEP 2 / 3</span>
+                    <span class="aw-mono" style="font-size: 0.75rem; color: var(--aw-teal-bright);">CODE VALIDATION</span>
+                </div>
+                <div id="awCountdownBadge" class="aw-telemetry-pill" style="font-size: 0.72rem;">
+                    <span class="aw-status-beacon" style="background: var(--aw-warning);"></span>
+                    <span id="countdownTimer">01:00</span>
+                </div>
+            </div>
+
+            <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Verify One-Time Passcode</h2>
+            <p style="font-size: 0.88rem; color: var(--aw-slate-light); margin-bottom: 1.5rem; line-height: 1.6;">
+                A 6-digit confirmation token was dispatched to <strong style="color: var(--aw-teal-bright);">{{ email|default:"your registered email" }}</strong>.
+            </p>
+
+            <!-- Inline Telemetry Status Banner (Replaces blocking alert dialog) -->
+            {% if res %}
+            <div id="statusToast" class="aw-tag" style="display: flex; align-items: center; gap: 8px; margin-bottom: 1.75rem; width: 100%; padding: 0.85rem 1.25rem; font-size: 0.85rem;
+                {% if 'Incorrect' in res or 'Error' in res or 'Failed' in res %}
+                    background: rgba(244,63,94,0.15); color: #FDA4AF; border-color: var(--aw-crisis);
+                {% else %}
+                    background: rgba(16,185,129,0.15); color: #6EE7B7; border-color: #10B981;
+                {% endif %}">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    {% if 'Incorrect' in res or 'Error' in res or 'Failed' in res %}
+                    <circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    {% else %}
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    {% endif %}
+                </svg>
+                <span>{{ res }}</span>
+            </div>
+            {% endif %}
+
+            <form action="third" method="POST" name="myForm" id="otpForm" onsubmit="return handleOtpSubmit()">
+                {% csrf_token %}
+                
+                <!-- Partitioned 6-digit PIN Box Input -->
+                <div class="aw-form-group">
+                    <label class="aw-form-label">Enter 6-Digit Verification Token</label>
+                    <div style="display: flex; gap: 8px; justify-content: space-between; margin: 0.5rem 0 1rem;">
+                        <input type="text" maxlength="1" class="aw-pin-box" autofocus inputmode="numeric" pattern="[0-9]*">
+                        <input type="text" maxlength="1" class="aw-pin-box" inputmode="numeric" pattern="[0-9]*">
+                        <input type="text" maxlength="1" class="aw-pin-box" inputmode="numeric" pattern="[0-9]*">
+                        <input type="text" maxlength="1" class="aw-pin-box" inputmode="numeric" pattern="[0-9]*">
+                        <input type="text" maxlength="1" class="aw-pin-box" inputmode="numeric" pattern="[0-9]*">
+                        <input type="text" maxlength="1" class="aw-pin-box" inputmode="numeric" pattern="[0-9]*">
+                    </div>
+                    <!-- Hidden field matching Django's tb1 expected key -->
+                    <input type="hidden" name="tb1" id="fullOtpField" value="">
+                    <!-- Retain legacy hidden context fields -->
+                    <input type="hidden" name="email" value="{{ email }}">
+                    <input type="hidden" name="phoneno" value="{{ mobile }}">
+                </div>
+
+                <div id="otpValidationMsg" style="font-size: 0.78rem; color: var(--aw-crisis); display: none; margin-bottom: 1rem;">
+                    Please enter the complete 6-digit numeric passcode.
+                </div>
+
+                <button type="submit" id="verifyBtn" class="aw-btn aw-btn-primary" style="width: 100%; padding: 0.85rem;">
+                    <span>Verify Code & Proceed to Profile</span> &rarr;
+                </button>
+            </form>
+
+            <!-- Resend Mechanism -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.75rem; padding-top: 1.25rem; border-top: 1px solid rgba(45,212,191,0.15); font-size: 0.82rem;">
+                <span style="color: var(--aw-slate-muted);">Didn't receive the email?</span>
+                <form action="second" method="POST" id="resendForm" style="display: inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="mobile" value="{{ mobile }}">
+                    <input type="hidden" name="email" value="{{ email }}">
+                    <button type="submit" id="resendBtn" class="aw-btn aw-btn-secondary" disabled 
+                            style="padding: 0.35rem 0.85rem; font-size: 0.78rem; opacity: 0.5; cursor: not-allowed;">
+                        Resend Code (60s)
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="aw-footer" style="margin-top: 0;">
+        <div class="aw-footer-bottom" style="margin-top: 0;">
+            <span>&copy; 2026 AnchorWell • UNESCO Mental Support Grid Accord.</span>
+            <span>Security: Partitioned PIN Token Hashing</span>
+        </div>
+    </footer>
+
+    <!-- Core Runtime Scripts -->
+    <script src="{% static 'js/anchorwell.js' %}"></script>
+    <script>
+        // 1. Partitioned PIN Box Auto-Advancement & Paste Support
+        const pinBoxes = document.querySelectorAll('.aw-pin-box');
+        const hiddenField = document.getElementById('fullOtpField');
+
+        pinBoxes.forEach((box, index) => {
+            box.addEventListener('input', (e) => {
+                const val = e.target.value.replace(/[^0-9]/g, '');
+                e.target.value = val;
+                if (val && index < pinBoxes.length - 1) {
+                    pinBoxes[index + 1].focus();
+                }
+                syncOtpField();
+            });
+
+            box.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && !box.value && index > 0) {
+                    pinBoxes[index - 1].focus();
+                }
+            });
+
+            box.addEventListener('paste', (e) => {
+                e.preventDefault();
+                const pasteData = (e.clipboardData || window.clipboardData).getData('text').trim().replace(/[^0-9]/g, '');
+                if (pasteData) {
+                    for (let i = 0; i < Math.min(pasteData.length, pinBoxes.length); i++) {
+                        pinBoxes[i].value = pasteData[i];
+                    }
+                    if (pasteData.length >= pinBoxes.length) {
+                        pinBoxes[pinBoxes.length - 1].focus();
+                    } else {
+                        pinBoxes[pasteData.length].focus();
+                    }
+                    syncOtpField();
+                }
+            });
+        });
+
+        function syncOtpField() {
+            let fullOtp = '';
+            pinBoxes.forEach(b => fullOtp += b.value);
+            hiddenField.value = fullOtp;
+        }
+
+        function handleOtpSubmit() {
+            syncOtpField();
+            const msg = document.getElementById('otpValidationMsg');
+            if (hiddenField.value.length !== 6) {
+                msg.style.display = 'block';
+                return false;
+            }
+            msg.style.display = 'none';
+            const btn = document.getElementById('verifyBtn');
+            btn.innerHTML = '<span class="aw-mono" style="font-size:0.8rem;">VALIDATING TOKEN...</span>';
+            btn.style.opacity = '0.7';
+            return true;
+        }
+
+        // 2. 60-Second Cryptographic Countdown Timer
+        let secondsLeft = 60;
+        const countdownEl = document.getElementById('countdownTimer');
+        const resendBtn = document.getElementById('resendBtn');
+
+        const timerInterval = setInterval(() => {
+            secondsLeft--;
+            const mins = Math.floor(secondsLeft / 60);
+            const secs = secondsLeft % 60;
+            countdownEl.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            resendBtn.textContent = `Resend Code (${secondsLeft}s)`;
+
+            if (secondsLeft <= 0) {
+                clearInterval(timerInterval);
+                countdownEl.textContent = "EXPIRED";
+                document.getElementById('awCountdownBadge').querySelector('.aw-status-beacon').style.background = 'var(--aw-crisis)';
+                resendBtn.disabled = false;
+                resendBtn.style.opacity = '1';
+                resendBtn.style.cursor = 'pointer';
+                resendBtn.textContent = "Resend Code Now";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

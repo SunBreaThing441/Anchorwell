@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sound Therapy Sanctuary - AnchorWell</title>
+    <link rel="icon" type="image/png" href="{% static 'img/psychbuddy.png' %}">
+    <link rel="stylesheet" href="{% static 'css/anchorwell.css' %}">
+</head>
+<body>
+    <!-- Top HUD Navigation -->
+    <header class="aw-nav-container">
+        <nav class="aw-nav">
+            <a href="/" class="aw-brand">
+                <div class="aw-brand-symbol">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                        <path d="M2 12h20"></path>
+                    </svg>
+                </div>
+                <div class="aw-brand-text">
+                    <span class="aw-brand-title">AnchorWell</span>
+                    <span class="aw-brand-badge">UNESCO Mental Support Grid</span>
+                </div>
+            </a>
+
+            <div class="aw-telemetry-pill">
+                <span class="aw-status-beacon"></span>
+                <span>AUDIO SANCTUARY ACTIVE</span>
+            </div>
+
+            <ul class="aw-nav-links">
+                <li class="aw-nav-item"><a href="/" class="aw-nav-link">Portal</a></li>
+                <li class="aw-nav-item"><a href="relaxation" class="aw-nav-link active">Sound Sanctuary</a></li>
+                <li class="aw-nav-item"><a href="sessions" class="aw-nav-link">Video Therapy</a></li>
+                <li class="aw-nav-item"><a href="psychiatrist" class="aw-nav-link">Specialists</a></li>
+                <li class="aw-nav-item"><a href="aboutus" class="aw-nav-link">UNESCO Accord</a></li>
+                <li class="aw-nav-item"><a href="signin" class="aw-btn aw-btn-primary" style="padding:0.45rem 1.1rem; font-size:0.85rem;">Access Grid</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="aw-main-content">
+        <section class="aw-hub-container">
+            <div class="aw-section-header" style="text-align: left; max-width: 850px; margin-bottom: 2rem;">
+                <div class="aw-hero-eyebrow" style="margin-bottom: 0.75rem;">
+                    <span class="aw-status-beacon"></span>
+                    <span>CIRCADIAN PSYCHOACOUSTIC STABILIZATION</span>
+                </div>
+                <h1 style="font-size: 2.5rem; margin-bottom: 0.75rem;">Neuro-Acoustic Sound Sanctuary</h1>
+                <p style="color: var(--aw-slate-light); font-size: 1.05rem;">
+                    Carefully calibrated nature soundscapes and harmonic frequencies. Streaming persists uninterrupted as you navigate throughout the AnchorWell clinical grid.
+                </p>
+            </div>
+
+            <!-- Headphone Calibration Notice -->
+            <div class="aw-card" style="padding: 1.25rem 2rem; margin-bottom: 2.5rem; display: flex; align-items: center; justify-content: space-between; border-color: rgba(45,212,191,0.4); background: rgba(13,148,136,0.12);">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(20,184,166,0.2); border: 1px solid var(--aw-teal-bright); display: flex; align-items: center; justify-content: center; color: var(--aw-teal-bright);">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 0.95rem; color: #FFFFFF;">Binaural Headphone Calibration Recommended</h4>
+                        <p style="font-size: 0.8rem; color: var(--aw-slate-light);">For full hemispheric synchronization and parasympathetic nervous system activation, use over-ear headphones.</p>
+                    </div>
+                </div>
+                <span class="aw-tag" style="background: rgba(45,212,191,0.2);">432 Hz HARMONIC</span>
+            </div>
+
+            <!-- Audio Cards Grid -->
+            <div class="aw-audio-grid">
+                {% if dictionary %}
+                {% for data in dictionary %}
+                <div class="aw-sound-card">
+                    <div class="aw-sound-preview">
+                        <img src="{% static data.ther_img %}" alt="{{ data.ther_name }}">
+                        <button class="aw-sound-overlay-btn aw-play-trigger" 
+                                data-name="{{ data.ther_name }}" 
+                                data-src="{% static data.ther_path %}"
+                                title="Play Track in Background Dock">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="aw-sound-body">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="aw-tag">SOMATIC CALM</span>
+                            <span class="aw-mono" style="font-size: 0.75rem; color: var(--aw-teal-bright);">HI-RES STEREO</span>
+                        </div>
+                        <h3>{{ data.ther_name }}</h3>
+                        <p>{{ data.ther_desc }}</p>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 1rem; border-top: 1px solid rgba(45,212,191,0.15);">
+                            <button class="aw-btn aw-btn-primary aw-play-trigger" 
+                                    data-name="{{ data.ther_name }}" 
+                                    data-src="{% static data.ther_path %}"
+                                    style="padding: 0.45rem 1rem; font-size: 0.85rem; width: 100%;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                <span>Stream In Persistent Sanctuary</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="aw-card" style="grid-column: 1 / -1; text-align: center; padding: 4rem;">
+                    <p style="color: var(--aw-slate-muted);">No sound sanctuary audio tracks detected in database.</p>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="aw-footer">
+        <div class="aw-footer-inner">
+            <div class="aw-footer-col">
+                <div class="aw-brand" style="margin-bottom:1rem;">
+                    <div class="aw-brand-symbol">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                            <path d="M2 12h20"></path>
+                        </svg>
+                    </div>
+                    <div class="aw-brand-text">
+                        <span class="aw-brand-title">AnchorWell</span>
+                        <span class="aw-brand-badge">UNESCO Mental Support Grid</span>
+                    </div>
+                </div>
+                <p style="font-size:0.85rem; color:var(--aw-slate-muted); line-height:1.6;">
+                    Providing continuous psychoacoustic stabilization across browser sessions.
+                </p>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Therapeutic Hubs</h4>
+                <ul>
+                    <li><a href="relaxation">Audio Therapy Sanctuary</a></li>
+                    <li><a href="sessions">Video Therapy Sessions</a></li>
+                    <li><a href="YM">Yoga & Meditation</a></li>
+                    <li><a href="books">Reading Resources</a></li>
+                </ul>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Clinical Grid</h4>
+                <ul>
+                    <li><a href="psychiatrist">Specialist Registry</a></li>
+                    <li><a href="wellnessLog">Reflection Journal</a></li>
+                    <li><a href="wellnesslogdir">Telemetry Archive</a></li>
+                </ul>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Institutional Status</h4>
+                <div style="font-family:var(--aw-font-mono); font-size:0.8rem; color:var(--aw-teal-bright); line-height:1.8;">
+                    <div>FREQUENCY: 432 HZ CALIBRATED</div>
+                    <div>BUFFERING: SEAMLESS AUDIO RUNTIME</div>
+                </div>
+            </div>
+        </div>
+        <div class="aw-footer-bottom">
+            <span>&copy; 2026 AnchorWell • UNESCO Mental Support Grid Accord.</span>
+        </div>
+    </footer>
+
+    <!-- Core Runtime Scripts -->
+    <script src="{% static 'js/anchorwell.js' %}"></script>
+</body>
+</html>

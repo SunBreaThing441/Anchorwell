@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wellness Log Telemetry Directory - AnchorWell</title>
+    <link rel="icon" type="image/png" href="{% static 'img/psychbuddy.png' %}">
+    <link rel="stylesheet" href="{% static 'css/anchorwell.css' %}">
+</head>
+<body>
+    <!-- Top HUD Navigation -->
+    <header class="aw-nav-container">
+        <nav class="aw-nav">
+            <a href="/" class="aw-brand">
+                <div class="aw-brand-symbol">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                        <path d="M2 12h20"></path>
+                    </svg>
+                </div>
+                <div class="aw-brand-text">
+                    <span class="aw-brand-title">AnchorWell</span>
+                    <span class="aw-brand-badge">UNESCO Mental Support Grid</span>
+                </div>
+            </a>
+
+            <div class="aw-telemetry-pill">
+                <span class="aw-status-beacon"></span>
+                <span>TELEMETRY ARCHIVE</span>
+            </div>
+
+            <ul class="aw-nav-links">
+                <li class="aw-nav-item"><a href="/" class="aw-nav-link">Portal</a></li>
+                <li class="aw-nav-item"><a href="relaxation" class="aw-nav-link">Sound Sanctuary</a></li>
+                <li class="aw-nav-item"><a href="sessions" class="aw-nav-link">Video Therapy</a></li>
+                <li class="aw-nav-item"><a href="wellnessLog" class="aw-nav-link active">Journal</a></li>
+                <li class="aw-nav-item"><a href="psychiatrist" class="aw-nav-link">Specialists</a></li>
+                <li class="aw-nav-item"><a href="aboutus" class="aw-nav-link">UNESCO Accord</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="aw-main-content">
+        <section class="aw-hub-container">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <div class="aw-hero-eyebrow" style="margin-bottom: 0.5rem;">
+                        <a href="wellnessLog" style="color: inherit; text-decoration: none;">&larr; JOURNAL EDITOR</a>
+                        <span style="opacity: 0.5;">|</span>
+                        <span>LONGITUDINAL ARCHIVE</span>
+                    </div>
+                    <h1 style="font-size: 2.5rem;">Patient Reflection Telemetry</h1>
+                </div>
+
+                <!-- Export Action Button -->
+                <div style="display: flex; gap: 1rem;">
+                    <a href="wellnessLog" class="aw-btn aw-btn-secondary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"></path></svg>
+                        <span>New Entry</span>
+                    </a>
+                    <a href="wellnessLogFileCreator" class="aw-btn aw-btn-primary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        <span>Export Clinical DOCX Dossier</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Profile Summary Card -->
+            <div class="aw-card" style="margin-bottom: 3rem; padding: 2rem;">
+                <h3 style="font-size: 1.2rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--aw-teal-bright)" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    Active Patient Record
+                </h3>
+
+                {% if data %}
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem;">
+                    {% for i, j in data %}
+                    <div style="background: rgba(6,8,20,0.5); border: 1px solid rgba(45,212,191,0.15); border-radius: 12px; padding: 1rem;">
+                        <span class="aw-mono" style="font-size: 0.72rem; color: var(--aw-slate-muted); text-transform: uppercase;">{{ i }}</span>
+                        <div style="font-size: 1rem; font-weight: 600; color: var(--aw-white-sterile); margin-top: 0.25rem;">{{ j }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Historical Log Feed -->
+            <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2 style="font-size: 1.5rem;">Recorded Reflection Feed</h2>
+                    <span class="aw-tag">LONGITUDINAL TELEMETRY</span>
+                </div>
+
+                {% if data2 %}
+                <div class="aw-log-feed">
+                    {% for data in data2 %}
+                    <div class="aw-log-entry">
+                        <div class="aw-log-meta">
+                            <span style="font-weight: 600;">ENTRY RECORD #{{ data.no }}</span>
+                            <span>DATE: {{ data.date }} &bull; TIME: {{ data.time }}</span>
+                        </div>
+                        <p style="font-size: 0.95rem; color: var(--aw-white-sterile); line-height: 1.7; white-space: pre-wrap;">
+                            {{ data.logmsg }}
+                        </p>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="aw-card" style="text-align: center; padding: 4rem;">
+                    <p style="color: var(--aw-slate-muted); margin-bottom: 1rem;">No previous reflection records logged yet.</p>
+                    <a href="wellnessLog" class="aw-btn aw-btn-primary">Write Your First Reflection</a>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="aw-footer">
+        <div class="aw-footer-inner">
+            <div class="aw-footer-col">
+                <div class="aw-brand" style="margin-bottom:1rem;">
+                    <div class="aw-brand-symbol">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                            <path d="M2 12h20"></path>
+                        </svg>
+                    </div>
+                    <div class="aw-brand-text">
+                        <span class="aw-brand-title">AnchorWell</span>
+                        <span class="aw-brand-badge">UNESCO Mental Support Grid</span>
+                    </div>
+                </div>
+                <p style="font-size:0.85rem; color:var(--aw-slate-muted); line-height:1.6;">
+                    Archiving and formatting mental health entries for patient self-understanding and psychiatric diagnostics.
+                </p>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Therapeutic Hubs</h4>
+                <ul>
+                    <li><a href="relaxation">Audio Therapy Sanctuary</a></li>
+                    <li><a href="sessions">Video Therapy Sessions</a></li>
+                    <li><a href="YM">Yoga & Meditation</a></li>
+                    <li><a href="books">Reading Resources</a></li>
+                </ul>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Clinical Grid</h4>
+                <ul>
+                    <li><a href="psychiatrist">Specialist Registry</a></li>
+                    <li><a href="wellnessLog">Reflection Journal</a></li>
+                    <li><a href="wellnesslogdir">Telemetry Archive</a></li>
+                </ul>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Institutional Status</h4>
+                <div style="font-family:var(--aw-font-mono); font-size:0.8rem; color:var(--aw-teal-bright); line-height:1.8;">
+                    <div>DATASET: MYSQL RELATIONAL</div>
+                    <div>EXPORT: PYTHON-DOCX CERTIFIED</div>
+                </div>
+            </div>
+        </div>
+        <div class="aw-footer-bottom">
+            <span>&copy; 2026 AnchorWell • UNESCO Mental Support Grid Accord.</span>
+        </div>
+    </footer>
+
+    <!-- Core Runtime Scripts -->
+    <script src="{% static 'js/anchorwell.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid Authentication - AnchorWell</title>
+    <link rel="icon" type="image/png" href="{% static 'img/psychbuddy.png' %}">
+    <link rel="stylesheet" href="{% static 'css/anchorwell.css' %}">
+</head>
+<body style="display: flex; flex-direction: column; min-height: 100vh;">
+    <!-- Top HUD Navigation -->
+    <header class="aw-nav-container">
+        <nav class="aw-nav">
+            <a href="/" class="aw-brand">
+                <div class="aw-brand-symbol">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                        <path d="M2 12h20"></path>
+                    </svg>
+                </div>
+                <div class="aw-brand-text">
+                    <span class="aw-brand-title">AnchorWell</span>
+                    <span class="aw-brand-badge">UNESCO Mental Support Grid</span>
+                </div>
+            </a>
+
+            <div class="aw-telemetry-pill">
+                <span class="aw-status-beacon"></span>
+                <span>AUTHENTICATION NODE</span>
+            </div>
+
+            <ul class="aw-nav-links">
+                <li class="aw-nav-item"><a href="/" class="aw-nav-link">Portal</a></li>
+                <li class="aw-nav-item"><a href="relaxation" class="aw-nav-link">Sound Sanctuary</a></li>
+                <li class="aw-nav-item"><a href="sessions" class="aw-nav-link">Video Therapy</a></li>
+                <li class="aw-nav-item"><a href="aboutus" class="aw-nav-link">UNESCO Accord</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="aw-main-content" style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 3rem 1.5rem;">
+        <div class="aw-card" style="width: 100%; max-width: 460px; padding: 2.75rem;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 2rem;">
+                <div class="aw-brand-symbol" style="width: 44px; height: 44px;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h2 style="font-size: 1.4rem;">Grid Access</h2>
+                    <p style="font-size: 0.78rem; color: var(--aw-teal-bright); font-family: var(--aw-font-mono);">
+                        AUTHENTICATED SECURE GATEWAY
+                    </p>
+                </div>
+            </div>
+
+            <form action="signin" method="POST" name="myForm">
+                {% csrf_token %}
+                <div class="aw-form-group">
+                    <label class="aw-form-label">Authorized Account Email</label>
+                    <input type="email" name="username" class="aw-form-input" placeholder="operator@unesco-grid.org" required>
+                </div>
+
+                <div class="aw-form-group" style="margin-top: 1rem;">
+                    <label class="aw-form-label">Access Passphrase</label>
+                    <input type="password" name="pass" id="pwd" class="aw-form-input" placeholder="••••••••••••" required>
+                </div>
+
+                <button type="submit" class="aw-btn aw-btn-primary" style="width: 100%; margin-top: 1.75rem; padding: 0.85rem;">
+                    <span>Authenticate & Connect</span> &rarr;
+                </button>
+            </form>
+
+            <div style="text-align: center; margin-top: 1.75rem; font-size: 0.85rem; color: var(--aw-slate-muted);">
+                New patient? <a href="first" style="color: var(--aw-teal-bright); font-weight: 600;">Initialize Registration Accord</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="aw-footer" style="margin-top: 0;">
+        <div class="aw-footer-bottom" style="margin-top: 0;">
+            <span>&copy; 2026 AnchorWell • UNESCO Mental Support Grid Accord.</span>
+        </div>
+    </footer>
+
+    <!-- Core Runtime Scripts -->
+    <script src="{% static 'js/anchorwell.js' %}"></script>
+</body>
+</html>

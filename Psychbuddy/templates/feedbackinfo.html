@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Feedback Telemetry - AnchorWell Admin</title>
+    <link rel="icon" type="image/png" href="{% static 'img/psychbuddy.png' %}">
+    <link rel="stylesheet" href="{% static 'css/anchorwell.css' %}">
+    <style>
+        :root {
+            --admin-amber: #F59E0B;
+            --admin-amber-glow: rgba(245, 158, 11, 0.3);
+            --admin-violet: #8B5CF6;
+        }
+        .aw-admin-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: calc(100vh - 70px);
+        }
+        .aw-admin-sidebar {
+            background: rgba(11, 15, 35, 0.95);
+            border-right: 1px solid rgba(245, 158, 11, 0.25);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .aw-admin-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            color: var(--aw-slate-light);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            margin-bottom: 0.35rem;
+        }
+        .aw-admin-nav-item:hover, .aw-admin-nav-item.active {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--admin-amber);
+            border-left: 3px solid var(--admin-amber);
+        }
+        .aw-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+        }
+        .aw-table th {
+            text-align: left;
+            padding: 1rem;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--admin-amber);
+            border-bottom: 1px solid rgba(245, 158, 11, 0.3);
+            font-family: var(--aw-font-mono);
+        }
+        .aw-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--aw-slate-light);
+        }
+        .aw-table tr:hover td {
+            background: rgba(245, 158, 11, 0.04);
+            color: #FFFFFF;
+        }
+    </style>
+</head>
+<body style="display: flex; flex-direction: column; min-height: 100vh; background-color: #030611;">
+    <!-- Isolated Admin Header -->
+    <header style="width: 100%; border-bottom: 1px solid rgba(245, 158, 11, 0.25); background: rgba(8, 11, 26, 0.95); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(245, 158, 11, 0.15); border: 1px solid var(--admin-amber); display: flex; align-items: center; justify-content: center; color: var(--admin-amber);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+            </div>
+            <div>
+                <span style="font-weight: 800; font-size: 1.15rem; color: #FFFFFF;">AnchorWell</span>
+                <span class="aw-mono" style="font-size: 0.7rem; color: var(--admin-amber); margin-left: 8px;">ADMINISTRATIVE SECURITY MESH</span>
+            </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <div class="aw-telemetry-pill" style="border-color: rgba(245, 158, 11, 0.4); color: var(--admin-amber);">
+                <span class="aw-status-beacon" style="background: var(--admin-amber); box-shadow: 0 0 10px var(--admin-amber);"></span>
+                <span>EXPERIENCE QUALITY AUDIT</span>
+            </div>
+            <a href="adminlogout" class="aw-btn aw-btn-secondary" style="font-size: 0.78rem; padding: 0.4rem 0.85rem; border-color: rgba(245, 158, 11, 0.3); color: var(--admin-amber);">
+                Terminate Session
+            </a>
+        </div>
+    </header>
+
+    <div class="aw-admin-layout">
+        <!-- Sidebar -->
+        <aside class="aw-admin-sidebar">
+            <div>
+                <div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.06);">
+                    <div style="font-size: 0.72rem; color: var(--aw-slate-muted); font-family: var(--aw-font-mono); margin-bottom: 4px;">ACTIVE CLEARANCE</div>
+                    <div style="font-weight: 700; color: #FFFFFF; font-size: 0.95rem;">System Root Controller</div>
+                    <div style="font-size: 0.75rem; color: var(--admin-amber);">Level 4 Clinical Clearance</div>
+                </div>
+
+                <nav>
+                    <a href="admin" class="aw-admin-nav-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        Platform Overview
+                    </a>
+                    <a href="usersNav" class="aw-admin-nav-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        Patient Registry
+                    </a>
+                    <a href="manageResources" class="aw-admin-nav-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                        Resource Telemetry
+                    </a>
+                    <a href="admintips" class="aw-admin-nav-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                        Clinical Directives
+                    </a>
+                    <a href="adminforum" class="aw-admin-nav-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                        Support Mesh Chat
+                    </a>
+                    <a href="appointmentmail" class="aw-admin-nav-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        Consultation Dispatch
+                    </a>
+                </nav>
+            </div>
+
+            <div style="padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06);">
+                <a href="/" style="display: flex; align-items: center; gap: 8px; color: var(--aw-slate-muted); font-size: 0.8rem; text-decoration: none;">
+                    &larr; Switch to Patient Portal
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="aw-main-content" style="padding: 2.5rem 3rem;">
+            <div style="margin-bottom: 2rem;">
+                <div class="aw-hero-eyebrow" style="margin-bottom: 0.5rem; color: var(--admin-amber);">
+                    <span class="aw-status-beacon" style="background: var(--admin-amber);"></span>
+                    <span>PATIENT EXPERIENCE TELEMETRY FEED</span>
+                </div>
+                <h1 style="font-size: 2rem;">User Feedback & Service Quality</h1>
+                <p style="color: var(--aw-slate-light); font-size: 0.95rem; margin-top: 0.25rem;">
+                    Review incoming patient satisfaction metrics, clinical feedback, and platform usability submissions.
+                </p>
+            </div>
+
+            <div class="aw-card" style="padding: 0; overflow: hidden; border-color: rgba(245, 158, 11, 0.25);">
+                {% if data %}
+                <div style="overflow-x: auto;">
+                    <table class="aw-table">
+                        <thead>
+                            <tr>
+                                <th>Contributor</th>
+                                <th>Contact Telemetry</th>
+                                <th>Feedback Transmission</th>
+                                <th>Timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dt in data %}
+                            <tr>
+                                <td style="font-weight: 600; color: #FFFFFF;">{{ dt.name }}</td>
+                                <td style="font-family: var(--aw-font-mono);">{{ dt.contact }}</td>
+                                <td style="line-height: 1.6; max-width: 450px;">{{ dt.msg }}</td>
+                                <td style="font-family: var(--aw-font-mono); font-size: 0.78rem; color: var(--aw-slate-muted);">{{ dt.datetime }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div style="padding: 3rem; text-align: center; color: var(--aw-slate-muted);">
+                    <p>No feedback transmissions logged in the database yet.</p>
+                </div>
+                {% endif %}
+            </div>
+        </main>
+    </div>
+
+    <!-- Core Runtime Scripts -->
+    <script src="{% static 'js/anchorwell.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ therapy }} Sessions - AnchorWell</title>
+    <link rel="icon" type="image/png" href="{% static 'img/psychbuddy.png' %}">
+    <link rel="stylesheet" href="{% static 'css/anchorwell.css' %}">
+</head>
+<body>
+    <!-- Top HUD Navigation -->
+    <header class="aw-nav-container">
+        <nav class="aw-nav">
+            <a href="/" class="aw-brand">
+                <div class="aw-brand-symbol">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                        <path d="M2 12h20"></path>
+                    </svg>
+                </div>
+                <div class="aw-brand-text">
+                    <span class="aw-brand-title">AnchorWell</span>
+                    <span class="aw-brand-badge">UNESCO Mental Support Grid</span>
+                </div>
+            </a>
+
+            <div class="aw-telemetry-pill">
+                <span class="aw-status-beacon"></span>
+                <span>STREAMING: {{ therapy|upper }}</span>
+            </div>
+
+            <ul class="aw-nav-links">
+                <li class="aw-nav-item"><a href="/" class="aw-nav-link">Portal</a></li>
+                <li class="aw-nav-item"><a href="relaxation" class="aw-nav-link">Sound Sanctuary</a></li>
+                <li class="aw-nav-item"><a href="sessions" class="aw-nav-link active">Video Therapy</a></li>
+                <li class="aw-nav-item"><a href="psychiatrist" class="aw-nav-link">Specialists</a></li>
+                <li class="aw-nav-item"><a href="aboutus" class="aw-nav-link">UNESCO Accord</a></li>
+                <li class="aw-nav-item"><a href="signin" class="aw-btn aw-btn-primary" style="padding:0.45rem 1.1rem; font-size:0.85rem;">Access Grid</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="aw-main-content">
+        <section class="aw-hub-container">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <div class="aw-hero-eyebrow" style="margin-bottom: 0.5rem;">
+                        <a href="sessions" style="color: inherit; text-decoration: none;">&larr; ALL MODALITIES</a>
+                        <span style="opacity: 0.5;">|</span>
+                        <span>ACTIVE STREAM</span>
+                    </div>
+                    <h1 style="font-size: 2.25rem;">{{ therapy }} <span style="font-weight: 300; opacity: 0.8;">Clinical Modules</span></h1>
+                </div>
+
+                <!-- Fast category switcher pills -->
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <a href="individualtherapy" class="aw-filter-btn {% if therapy == 'individual therapy' %}active{% endif %}">Individual</a>
+                    <a href="coupletherapy" class="aw-filter-btn {% if therapy == 'Couple Therapy' %}active{% endif %}">Couples</a>
+                    <a href="familytherapy" class="aw-filter-btn {% if therapy == 'Family Therapy' %}active{% endif %}">Family</a>
+                    <a href="grouptherapy" class="aw-filter-btn {% if therapy == 'Group therapy' %}active{% endif %}">Group</a>
+                    <a href="heartbrokentherapy" class="aw-filter-btn {% if therapy == 'Heartbroken Therapy' %}active{% endif %}">Heartbreak</a>
+                    <a href="traumatherapy" class="aw-filter-btn {% if therapy == 'Trauma Therapy' %}active{% endif %}">Trauma</a>
+                </div>
+            </div>
+
+            <!-- Video Grid -->
+            <div class="aw-video-grid">
+                {% if myset %}
+                {% for data in myset %}
+                <div class="aw-video-card">
+                    <div class="aw-video-player-wrap">
+                        <video controls preload="metadata" style="width:100%; height:100%; background:#000;">
+                            <source src="{% static data.path %}" type="video/mp4">
+                            Your browser does not support HTML5 video streaming.
+                        </video>
+                    </div>
+                    <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="aw-tag">{{ data.category }}</span>
+                            <span class="aw-mono" style="font-size: 0.75rem; color: var(--aw-teal-bright);">1080p MP4</span>
+                        </div>
+                        <h3 style="font-size: 1.2rem;">{{ data.name }}</h3>
+                        <p style="font-size: 0.88rem; color: var(--aw-slate-light); line-height: 1.6;">
+                            {{ data.desc }}
+                        </p>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="aw-card" style="grid-column: 1 / -1; text-align: center; padding: 4rem;">
+                    <p style="color: var(--aw-slate-muted);">No video sessions currently listed under {{ therapy }}.</p>
+                    <a href="sessions" class="aw-btn aw-btn-primary" style="margin-top: 1rem;">Return to Video Directory</a>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="aw-footer">
+        <div class="aw-footer-inner">
+            <div class="aw-footer-col">
+                <div class="aw-brand" style="margin-bottom:1rem;">
+                    <div class="aw-brand-symbol">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                            <path d="M2 12h20"></path>
+                        </svg>
+                    </div>
+                    <div class="aw-brand-text">
+                        <span class="aw-brand-title">AnchorWell</span>
+                        <span class="aw-brand-badge">UNESCO Mental Support Grid</span>
+                    </div>
+                </div>
+                <p style="font-size:0.85rem; color:var(--aw-slate-muted); line-height:1.6;">
+                    Evidence-based guided sessions streamed securely across client nodes.
+                </p>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Therapeutic Hubs</h4>
+                <ul>
+                    <li><a href="relaxation">Audio Therapy Sanctuary</a></li>
+                    <li><a href="sessions">Video Therapy Sessions</a></li>
+                    <li><a href="YM">Yoga & Meditation</a></li>
+                    <li><a href="books">Reading Resources</a></li>
+                </ul>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Clinical Grid</h4>
+                <ul>
+                    <li><a href="psychiatrist">Specialist Registry</a></li>
+                    <li><a href="wellnessLog">Reflection Journal</a></li>
+                    <li><a href="wellnesslogdir">Telemetry Archive</a></li>
+                </ul>
+            </div>
+            <div class="aw-footer-col">
+                <h4>Institutional Status</h4>
+                <div style="font-family:var(--aw-font-mono); font-size:0.8rem; color:var(--aw-teal-bright); line-height:1.8;">
+                    <div>ACTIVE: {{ therapy|upper }}</div>
+                    <div>DELIVERY: PARTIAL CONTENT RANGE</div>
+                </div>
+            </div>
+        </div>
+        <div class="aw-footer-bottom">
+            <span>&copy; 2026 AnchorWell • UNESCO Mental Support Grid Accord.</span>
+        </div>
+    </footer>
+
+    <!-- Core Runtime Scripts -->
+    <script src="{% static 'js/anchorwell.js' %}"></script>
+</body>
+</html>
